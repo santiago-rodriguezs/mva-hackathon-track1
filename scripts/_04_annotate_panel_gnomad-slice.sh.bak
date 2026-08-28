@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+# Anota las variantes del panel (results/panel_pass.vcf.gz) con:
+#   - frecuencia poblacional gnomAD v4.1 genomas (slice remoto por tabix)
+#   - marca de si caen en region codificante/splice del panel (BED de CDS)
+# y despues rankea: nos quedamos con las RARAS (gnomAD AF_grpmax < 0.1% o ausentes)
+# y resumimos genotipos por gen sobre ese subconjunto.
+#
+# Requiere haber corrido antes: 02_panel_triage.sh  y  make_panel_cds_bed.py
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+PANEL_PASS="${1:-results/panel_pass.vcf.gz}"
+GENE_BED="${2:-config/mva_panel_grch38.bed}"          # cuerpo del gen +-10kb (UCSC chr)
+CDS_BED="${3:-config/mva_panel_cds_grch38.bed}"       # exones + splice (UCSC chr)
+RARE_MAX=0.001                                        # umbral de "raro"
+
+GNOMAD_BASE="https://storage.googleapis.com/gcp-public-data--gnomad/release/4.1/vcf/genomes/gnomad.genomes.v4.1.sites"
+
+mkdir -p results
+[ -s "$PANEL_PASS" ] || { echo "!! falta $PANEL_PASS (corré 02_panel_triage.sh)"; exit 1; }
+[ -s "$CDS_BED" ]    || { echo "!! falta $CDS_BED (corré make_panel_cds_bed.py)"; exit 1; }
+
+# --- 1. traer el slice de gnomAD para las regiones del panel --------------------
+echo "[1/4] bajando slices de gnomAD v4.1 (genomas) para las regiones del panel"
+: > results/gnomad_panel.parts.txt
+while IFS=$'\t' read -r chrom s e _; do
+  nochr="${chrom#chr}"
+  url="${GNOMAD_BASE}.${chrom}.vcf.bgz"
+  part="results/gnomad_${chrom}_${s}_${e}.bcf"
+  echo "      ${chrom}:${s}-${e}"
+  # nos quedamos solo con AF / AF_grpmax / nhomalt para que pese poco
+  bcftools view -r "${chrom}:$((s + 1))-${e}" "$url" -Ou 2>/dev/null \
+    | bcftools annotate -x 'INFO,^INFO/AF,INFO/AF_grpmax,INFO/nhomalt' -Ob -o "$part"
+  bcftools index -f "$part"
+  echo "$part" >> results/gnomad_panel.parts.txt
+done < "$GENE_BED"
+
+echo "[2/4] concatenando + renombrando contigs a estilo del VCF (sin 'chr')"
+# mapa chr15 -> 15 para todos los contigs presentes
+awk '{print $1"\t"substr($1,4)}' "$GENE_BED" | sort -u > results/chr_map.txt
+bcftools concat -a -Ou $(cat results/gnomad_panel.parts.txt) \
+  | bcftools annotate --rename-chrs results/chr_map.txt -Ou \
+  | bcftools sort -Oz -o results/gnomad_panel.vcf.gz
+bcftools index -t -f results/gnomad_panel.vcf.gz
+echo "      sitios gnomAD en el panel: $(bcftools view -H results/gnomad_panel.vcf.gz | wc -l | tr -d ' ')"
+
+# --- 3. anotar panel_pass -----------------------------------------------------
+echo "[3/4] anotando panel_pass con gnomAD + marca CDS/splice"
+# BED de CDS a estilo sin 'chr' y comprimido/tabixado
+sed -E 's/^chr//' "$CDS_BED" | sort -k1,1 -k2,2n | bgzip -f > results/panel_cds.nochr.bed.gz
+tabix -f -p bed results/panel_cds.nochr.bed.gz
+
+bcftools annotate \
+  -a results/gnomad_panel.vcf.gz \
+  -c 'INFO/gnomAD_AF:=INFO/AF,INFO/gnomAD_AFmax:=INFO/AF_grpmax,INFO/gnomAD_nhom:=INFO/nhomalt' \
+  "$PANEL_PASS" -Ou \
+  | bcftools annotate \
+      -a results/panel_cds.nochr.bed.gz \
+      -c CHROM,FROM,TO,.,INFO/PANEL_REGION \
+      -h <(echo '##INFO=<ID=PANEL_REGION,Number=1,Type=String,Description="gene|tier|transcript si cae en CDS/splice del panel">') \
+      -Oz -o results/panel_annot.vcf.gz
+bcftools index -t -f results/panel_annot.vcf.gz
+
+# --- 4. rankear: raras (o ausentes en gnomAD) + resumen por gen --------------
+echo "[4/4] filtrando a RARAS (gnomAD_AFmax < ${RARE_MAX} o ausente)"
+bcftools view -i "INFO/gnomAD_AFmax<${RARE_MAX} || INFO/gnomAD_AFmax='.'" \
+  results/panel_annot.vcf.gz -Oz -o results/panel_rare.vcf.gz
+bcftools index -t -f results/panel_rare.vcf.gz
+echo "      variantes raras en el panel: $(bcftools view -H results/panel_rare.vcf.gz | wc -l | tr -d ' ')"
+
+# tabla: gen por region (BED de cuerpo de gen) + anotaciones
+{
+  printf 'GENE\tCHROM\tPOS\tREF\tALT\tGT\tDP\tGQ\tgnomAD_AFmax\tgnomAD_nhom\tPANEL_REGION\tFILTER\n'
+  while IFS=$'\t' read -r c s e name _; do
+    gene="${name%%|*}"; nochr="${c#chr}"
+    bcftools query -r "${nochr}:$((s + 1))-${e}" \
+      -f "${gene}"'\t%CHROM\t%POS\t%REF\t%ALT\t[%GT\t%DP\t%GQ]\t%INFO/gnomAD_AFmax\t%INFO/gnomAD_nhom\t%INFO/PANEL_REGION\t%FILTER\n' \
+      results/panel_rare.vcf.gz || true
+  done < "$GENE_BED"
+} > results/panel_rare.tsv
+echo "      -> results/panel_rare.tsv"
+
+echo
+echo "=== GENOTIPOS POR GEN (solo variantes RARAS) ==="
+awk -F'\t' 'NR>1 {
+    gt=$6; gsub(/\|/,"/",gt);
+    cds=($11!="." && $11!="") ? 1 : 0;
+    genes[$1]=1;
+    if (gt=="0/1"||gt=="1/0") { het[$1]++; if(cds) het_cds[$1]++ }
+    else if (gt=="1/1")       { hom[$1]++; if(cds) hom_cds[$1]++ }
+    else                      { oth[$1]=oth[$1] gt "," }
+  }
+  END {
+    printf "  %-10s %-13s %-13s %s\n","GEN","0/1 (CDS)","1/1 (CDS)","otros GT";
+    for (g in genes)
+      printf "  %-10s %-13s %-13s %s\n", g,
+        (het[g]+0)" ("(het_cds[g]+0)")",
+        (hom[g]+0)" ("(hom_cds[g]+0)")", oth[g];
+  }' results/panel_rare.tsv | sort
+
+echo
+echo "=== VARIANTES RARAS EN CDS/SPLICE (candidatas del envio #1) ==="
+awk -F'\t' 'NR==1 || ($11!="." && $11!="")' results/panel_rare.tsv | column -t -s$'\t'
+
+echo
+echo "Lectura: un gen con  1/1 en CDS  o  >=2  0/1 en CDS  es la senal fuerte."
+echo "Un gen con exactamente una 0/1 en CDS y nada mas => 2do alelo oculto (fase 2)."

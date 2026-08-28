@@ -1,0 +1,17 @@
+# Panel de genes candidatos para Mosaic Variegated Aneuploidy.
+# tier: core = gen establecido de MVA; extended = gen mitotico relacionado, se scrollea por completitud
+symbol	alias	tier	note
+BUB1B	BUBR1	core	MVA1. El mas frecuente. Patron clasico: un alelo truncante + un alelo hipomorfico criptico
+CEP57	-	core	MVA2. Centrosoma; ademas recluta MAD1 al cinetocoro
+TRIP13	PCH2	core	MVA3. AAA-ATPasa, remodela MAD2
+BUB1	-	core	Quinasa del SAC
+BUB3	-	core	Componente del SAC
+MAD1L1	MAD1	core	Componente del SAC
+MAD2L1BP	p31comet, CMT2	core	Proteina de union a MAD2
+CEP192	-	core	Maduracion del centrosoma
+CENATAC	CCDC84	core	Asociada al spliceosoma, reportada en MVA
+MAD2L1	MAD2	extended	SAC nuclear, screening por completitud
+CENPE	-	extended	Motor del cinetocoro; enanismo primordial microcefalico
+CENPF	-	extended	Cinetocoro
+PLK4	-	extended	Duplicacion del centriolo
+ESCO2	-	extended	Cohesion; sindrome de Roberts, solapamiento fenotipico

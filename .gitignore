@@ -1,0 +1,35 @@
+# ============================================================
+# CRITICAL: este repo va a ser PUBLICO. Los datos del hackathon NO lo son.
+# Nada derivado del genoma del proband se commitea. Ver DATA_HANDLING.md
+# ============================================================
+data/
+ref/
+results/*
+!results/.gitkeep
+
+# Notas de trabajo con detalle sensible (genotipos individuales del proband,
+# fenotipo textual del doc clinico de acceso controlado). NO se commitea.
+# La version publicable de cada nota vive en notes/ sin este subdirectorio.
+notes/private/
+*_full.md
+*.local.md
+
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.bam
+*.bai
+*.cram
+*.crai
+*.vcf
+*.vcf.gz
+*.vcf.gz.tbi
+*.tbi
+*.bcf
+*.gvcf*
+
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store

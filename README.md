@@ -11,6 +11,27 @@ Aneuploidy del hackathon de Sage Bionetworks / Hugging Face / MVA Society.
 > Este repo va a ser publico; los datos no. Nunca se commitea un archivo
 > derivado del genoma del proband.
 
+## Equipo y envios
+
+**Nombre de equipo — poner IDENTICO en cada submission, los dos integrantes:**
+
+```
+IAN-SANTIAGO-MVA
+```
+
+- No hay "crear equipo" en el Space: cada uno sube con su cuenta de Hugging Face
+  y las entradas se agrupan por ese string exacto (mismo casing, mismos guiones).
+- Track 1: **6 envios por participante** (pool efectivo de 12). No subir el mismo
+  CSV dos veces. Cuenta el mejor score del equipo.
+- Track 2 (si se hace): una sola persona sube por el equipo, 3 en total; el resto
+  se ignora.
+- Repo privado durante el hackathon, **publico al cerrar** (lo revisa el jurado).
+- Integrantes GitHub: `santiago-rodriguezs`, `ianghitarroni`. Cada uno con su
+  propio acceso al dataset en HF — no se comparten datos (ver DATA_HANDLING.md).
+- El formulario Track 1 pide 3 cosas: URL de este repo + CSV de predicciones +
+  reporte de metodos (PDF/MD). Si se uso un asistente de IA hay que declararlo
+  (proveedor, plan, setting de datos).
+
 ## La estrategia en un parrafo
 
 La enfermedad ya tiene diagnostico confirmado, asi que identificar el gen no es
@@ -38,12 +59,19 @@ analisis a ciegas.
 ## Uso
 
 ```bash
-./scripts/setup_env.sh                  # dependencias (una vez)
-./scripts/00_download_vcf.sh            # solo el VCF, no los 85 GB
-python3 scripts/make_panel_bed.py       # coordenadas GRCh38 del panel
-./scripts/01_inspect_vcf.sh data/WGS_EX2312012_HGWCNDSX7.vcf.gz
-./scripts/02_panel_triage.sh data/WGS_EX2312012_HGWCNDSX7.vcf.gz
+./scripts/setup_env.sh                       # dependencias (una vez)
+./scripts/00_download_vcf.sh                  # solo el VCF, no los 85 GB
+python3 scripts/make_panel_bed.py            # cuerpo del gen +-10kb (panel)
+python3 scripts/make_panel_cds_bed.py        # exones + splice (panel)
+./scripts/01_inspect_vcf.sh   data/WGS_EX2312012_HGWCNDSX7.vcf.gz
+./scripts/03_get_reference.sh                 # GRCh38 no-alt (contigs sin 'chr')
+./scripts/02_panel_triage.sh  data/WGS_EX2312012_HGWCNDSX7.vcf.gz
+python3 scripts/04_annotate_panel.py         # gnomAD + consecuencia (VEP REST)
+./scripts/05_deep_annotate.sh                # ClinVar + AlphaMissense (candidatas)
 ```
+
+Notas de metodo y estado: `notes/01-metodo-dia1.md`, `notes/02-plan.md`.
+El detalle con genotipos/coordenadas vive en `notes/private/` (GITIGNORED).
 
 ## Formato de entrega (Track 1)
 

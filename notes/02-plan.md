@@ -3,49 +3,54 @@
 Versión publicable (estrategia y método). Sin genotipos ni coordenadas de
 candidatas — eso vive en `notes/private/`.
 
-## Dónde estamos (2026-08-26, fin del día 1 + anotación profunda)
+## Dónde estamos (2026-08-30) — ENVÍO #1: SCORE PERFECTO
 
-- **Alelo #1: resuelto.** El pipeline identifica en BUB1B un alelo truncante que
-  ClinVar clasifica **Pathogenic/Likely_pathogenic para "Mosaic variegated
-  aneuploidy syndrome 1"** (múltiples submitters, sin conflictos), ultra-raro,
-  LOFTEE HC, CADD 36. No es un candidato, es la respuesta para el 1er alelo.
-- **Alelo #2: candidato fuerte, ~50–60 % de confianza.** Segundo alelo missense
-  raro en BUB1B: **AlphaMissense 0.92 (likely_pathogenic)**, ausente de gnomAD,
-  en el último exón (proteína alterada, compatible con hipomórfico). Contras: el
-  cambio de aminoácido figura en ClinVar como **VUS** (single submitter) y falta
-  confirmar la **fase** (cis/trans respecto del truncante; están a ~11 kb, GATK
-  no los faseó). Puede ser el 2º alelo real o un pasajero con el verdadero 2º hit
-  críptico (intrón profundo / MEI / SV) → fase 2.
-- **Fase 2 (reads): sin empezar.** Bajar 85 GB + alinear + phasing con reads +
-  SpliceAI/Pangolin + MELT sobre BUB1B.
-- **Fenotipo: confirmado (proxy liviano).** Phen2Gene rankea BUB1B #1 del panel
-  y top 0.2 % genoma-wide con los HPO del caso. Exomiser/LIRICAL "de verdad"
-  pendiente (necesita Java + ~20 GB de datos hg38; no instalado).
-- `epcr` (fase 3) sin calibrar.
+**Track 1, submission 1 (equipo IAN-SANTIAGO-MVA): Rank points 100/100, F-max
+1.000, "full match at rank 1".** Los dos alelos BUB1B son la respuesta clínica
+confirmada:
 
-**Lectura honesta:** mejor que ayer. Probablemente tenemos **los dos alelos** ya
-desde el VCF — el #1 seguro, el #2 defendible. Piso realista subió: el envío #1
-deja de ser una apuesta a medias. Techo (podio): sigue dependiendo de que el #2
-sea correcto (o de encontrar el críptico si no lo es) y de un `epcr` bien
-calibrado. ~30–35 % del camino. Runway: ~7–8 fines de semana, 6 envíos.
+- **Alelo #1:** truncante en BUB1B, ClinVar Pathogenic/Likely_pathogenic para
+  "Mosaic variegated aneuploidy syndrome 1", LOFTEE HC, ultra-raro, CADD 36.
+- **Alelo #2:** missense raro en BUB1B (último exón), ausente de gnomAD,
+  AlphaMissense 0.92. **Confirmado correcto por el leaderboard** — no era críptico,
+  era llamable en el VCF estándar.
 
-## Próximos pasos por ROI
+Implicancias:
 
-1. ~~ClinVar + AlphaMissense sobre las candidatas BUB1B~~ **HECHO (2026-08-26).**
-   Alelo #1 = truncante ClinVar P/LP para MVA1. Alelo #2 = missense AlphaMissense
-   0.92, gnomAD-ausente, pero VUS en ClinVar y fase sin confirmar.
-2. ~~Priorización por fenotipo~~ **HECHO (proxy Phen2Gene).** BUB1B #1 del panel.
-   Pendiente: Exomiser/LIRICAL real (Java + datos hg38) para scoring de variante
-   + ACMG — setup aparte, ~20 GB.
-3. **Envío #1 como sonda** con el par BUB1B como `primary` (`epcr` ~0,92 / ~0,5).
-   El leaderboard dice si el 2º alelo es correcto (2 alelos) o si falta (1 alelo).
-   **Siguiente acción concreta.**
-4. **Según (3):** si falta el 2º → fase 2 (bajar FASTQ, alinear, phasing con
-   reads, SpliceAI/Pangolin en intrones de BUB1B, MELT en BUB1B). Si están los
-   dos → calibrar `epcr`, sumar 2–3 hallazgos secundarios bien razonados,
-   fase 4 (Snakemake/Nextflow + writeup).
-5. Confirmar **fase** de las dos BUB1B: intentar phasing con reads (aunque estén
-   a 11 kb, algún par o read solapando ayuda), o dejarlo para long-read/fase 2.
+- **El score automático de Track 1 ya está al máximo.** No conviene gastar más
+  envíos (solo cuenta el mejor; quedan 5 en reserva). El FAQ del hackathon avisa
+  que hay muchos scores perfectos → **el automático es piso, no diferenciador.**
+- **Fase 2 (bajar 85 GB, realinear, MEI/SV/splicing) YA NO es necesaria para
+  encontrar la variante.** Podría servir solo para *reforzar el writeup* (confirmar
+  fase con reads).
+- Lo que decide el puesto ahora: **(a) el methods write-up** (lo juzga un panel
+  por rigor y profundidad) y **(b) Track 2** (drug repurposing) si lo hacemos.
+
+**Lectura honesta:** de "apuesta a medias" a **respuesta correcta y completa en
+~2 días**. Pero el techo ya no depende de la variante — depende de cuán bien
+escrito y fundamentado esté el informe frente a las otras decenas de equipos que
+también sacaron 100, y de si encaramos Track 2. ~40 % del camino hacia un buen
+puesto; el trabajo restante es de comunicación y profundidad, no de pipeline.
+
+## Próximos pasos por ROI (reordenado tras el envío #1)
+
+1. **Pulir el methods write-up** — es lo único que separa entre los 100/100.
+   Profundizar: mecanismo BUB1B/BubR1 y el checkpoint de ensamblaje del huso;
+   en qué dominio cae el residuo del missense (kinasa / unión a cinetocoro);
+   clasificación ACMG de los dos alelos; argumento de fase (trans); y una
+   pantalla de hallazgos secundarios (lista ACMG SF).
+2. **Confirmar fase con reads** — ahora solo para rigor del informe: bajar el
+   BAM/región de BUB1B de los FASTQ, phasing read-backed de los dos alelos.
+   (No cambia el score, sí la solidez del writeup.)
+3. **Decidir Track 2** — mecanismo ya cerrado (BUB1B LoF → disfunción del SAC →
+   aneuploidía → predisposición a cáncer). Track 2 = informe de drug repurposing
+   + video de 3 min, 3 envíos por equipo, lo juzga panel experto. Es la otra
+   mitad del premio y tenemos la base hecha.
+4. **Exomiser/LIRICAL real** (Java + datos hg38) — para ACMG formal en el writeup.
+5. **Fase 4:** Snakemake/Nextflow del pipeline + writeup reproducible.
+
+> Nota de mecánica: el `proband_id` que exige el scorer es literalmente
+> `PROBAND01` (no el nombre de muestra del VCF).
 
 ## Fases (del README)
 

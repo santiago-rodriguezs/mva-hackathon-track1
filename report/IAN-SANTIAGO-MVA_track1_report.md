@@ -1,157 +1,185 @@
-# MVA Hackathon 2026 — Track 1 methods report
+# MVA Hackathon 2026 — Track 1 methods description
 
-**Team:** IAN-SANTIAGO-MVA
+**Team name:** IAN-SANTIAGO-MVA
 **Members (Hugging Face / GitHub):** santiago-rodriguezs, ianghitarroni
+**Model / approach:** panel-triage + VEP/ClinVar/AlphaMissense annotation (`panel-vep-clinvar`)
 **Submission:** #1 (probe)
 **Date:** 2026-08-30
 **Code:** https://github.com/santiago-rodriguezs/mva-hackathon-track1
 **Proband:** WGS_EX2312012
 
+Structured to answer the official *Methods description* form (Track 1).
+
 ---
 
-## 1. Summary of the prediction
+## Q1 (required) — Generative AI disclosure
 
-We predict the proband's condition is **autosomal-recessive Mosaic Variegated
-Aneuploidy type 1 (MVA1)** caused by **compound-heterozygous variants in
-`BUB1B` (NM_001211.6 / ENST00000287598, MANE Select):**
+- **Provider / product:** Anthropic — Claude, via the **Claude Code** CLI, running
+  locally on the analyst's machine and orchestrating command-line tools.
+- **Model:** Claude Sonnet (Claude Code default).
+- **Plan / tier:** **Claude Pro** (consumer subscription, USD 20/month).
+- **Relevant setting:** at the time of this work the account setting *"Help improve
+  Claude"* (use of chats and coding sessions to train Anthropic models) was
+  **ENABLED / not opted out**. It has since been reviewed by the participant.
+- **What the model received:** shell-command outputs from the local pipeline
+  (bcftools / Ensembl VEP / ClinVar), including per-variant genotype, depth and
+  quality fields for the ~15 MVA-panel variants examined in detail, aggregate
+  variant counts, HPO terms and short excerpts of the clinical description, and
+  the candidate variant coordinates (which are the submission itself). The raw
+  FASTQ, the complete VCF, and the full clinical document were **not** uploaded to
+  any external service; all heavy processing ran locally.
 
-| | Variant | Consequence | Key evidence |
+---
+
+## Q2 — Approach in detail
+
+Autosomal-recessive disease with a confirmed clinical diagnosis of MVA, so the
+strategy is: (a) restrict to a curated MVA gene panel, (b) recover the expected
+**two** causal alleles in one gene, (c) rank by evidence.
+
+**Pipeline (all scripted, `scripts/`, numbered by run order):**
+
+1. **Input characterisation** (`01_inspect_vcf.sh`) — 1 sample (proband only, not
+   a trio); 5,012,204 variants; GATK HaplotypeCaller 4.2.4.0 + VariantFiltration
+   hard filters; reference GRCh38 no-alt + hs38d1 with numeric contig names; not
+   pre-annotated (native GATK INFO only); FORMAT carries GATK physical-phasing
+   tags.
+2. **Panel definition** — 14 genes (9 established MVA genes + 5 related
+   mitotic/SAC genes), `config/mva_genes.tsv`. Two BEDs from Ensembl: gene body
+   ± 10 kb, and canonical CDS + 8 bp splice padding (`make_panel_bed.py`,
+   `make_panel_cds_bed.py`).
+3. **Reference** (`03_get_reference.sh`) — NCBI GRCh38 no-alt analysis set, `chr`
+   prefix stripped to match the VCF contig names exactly.
+4. **Panel triage** (`02_panel_triage.sh`) — contig-name reconciliation
+   (UCSC vs numeric), subset to panel, `bcftools norm -m -any -f <ref>`, then
+   quality filter `FILTER=PASS && FMT/DP>=10 && FMT/GQ>=20`.
+   1,814 raw panel sites → **1,778 after quality filtering**.
+5. **Frequency + consequence** (`04_annotate_panel.py`) — Ensembl VEP REST
+   (batches of 200): `most_severe_consequence` + gnomAD allele frequencies; CDS/
+   splice overlap flag. Rare = gnomAD AF < 0.001 or absent → **341 / 1,778**.
+6. **Deep annotation of candidates** (`05_deep_annotate.sh`,
+   `05_vep_candidates.py`) — local ClinVar (GRCh38, 2026-08-22) via
+   `bcftools annotate`; VEP REST with HGVS, MANE, exon/intron numbering,
+   AlphaMissense, CADD, LOFTEE, Mastermind, dbscSNV on the rare CDS/splice set.
+7. **Phenotype prioritisation** — 8 HPO terms from the clinical description;
+   Phen2Gene (API) ranks the panel; BUB1B is #1 in the panel and top ~0.2 %
+   genome-wide.
+
+**Result / prediction:** compound-heterozygous **BUB1B** (NM_001211.6):
+
+| | Variant | Consequence | Evidence |
 |---|---|---|---|
-| Allele 1 | `chr15:40209701 T>G` · c.2210T>G · p.Leu737Ter | stop_gained, exon 17/23 | **ClinVar Pathogenic/Likely_pathogenic for "Mosaic variegated aneuploidy syndrome 1"** (multiple submitters, no conflicts); LOFTEE high-confidence LoF; gnomAD ~3×10⁻⁵; CADD 36; literature-cited (Mastermind) |
-| Allele 2 | `chr15:40220612 T>G` · c.3006T>G · p.Asn1002Lys | missense, exon 23/23 (last) | Absent from gnomAD (genomes + exomes); **AlphaMissense 0.92 → likely pathogenic**; CADD 24.5; last-exon (NMD-escape → altered protein, compatible with a hypomorphic second allele). Caveat: the amino-acid substitution is listed in ClinVar as **Uncertain significance** (single submitter). |
+| Allele 1 | chr15:40209701 T>G · c.2210T>G · p.Leu737Ter | stop_gained (exon 17/23) | **ClinVar Pathogenic/Likely_pathogenic for "Mosaic variegated aneuploidy syndrome 1"** (multiple submitters, no conflicts); LOFTEE HC; gnomAD ~3×10⁻⁵; CADD 36; Mastermind-cited |
+| Allele 2 | chr15:40220612 T>G · c.3006T>G · p.Asn1002Lys | missense (last exon 23/23) | absent from gnomAD; **AlphaMissense 0.92 (likely pathogenic)**; CADD 24.5; ClinVar lists the aa change as VUS |
 
-EPCR assigned to the pair: **0.8**. Allele 1 alone would merit ~0.95; the pair is
-discounted for the residual uncertainty on allele 2 (ClinVar VUS) and because
-**phase (cis vs trans) is not experimentally confirmed** — the two variants are
-10.9 kb apart and are not physically phased in the GATK VCF. Trans is inferred
-from the fact that the child is affected.
-
-This is a **probe submission**: the live leaderboard score tells us whether
-allele 2 is the true second hit or whether the second causal allele is cryptic
-(deep-intronic, mobile-element insertion, or structural) and must be recovered
-from the FASTQ in a second phase.
+Both are clean heterozygous calls (allele balance 0.54 / 0.46, GQ 99, PASS).
+Phase (cis/trans) is not resolved — the variants are 10.9 kb apart and are not
+physically phased in the GATK VCF; trans is inferred from the child being
+affected. **EPCR 0.80** for the pair (allele 1 alone would merit ~0.95; the pair
+is discounted for the residual uncertainty on allele 2 and the unconfirmed phase).
 
 ---
 
-## 2. Data handling
+## Q3 — Automated output or manually curated?
 
-The dataset is the whole genome of a living child under controlled access. No
-genome-derived file (FASTQ, BAM, VCF, or any table of individual genotypes) is
-committed to the repository; `data/`, `ref/`, `results/` and working notes with
-genotype-level detail are git-ignored and verified with `git check-ignore` before
-every commit. For this phase only the VCF (+ index) and the clinical phenotype
-document were downloaded; the ~85 GB of FASTQ were not. Each team member has
-their own dataset access and downloads their own copy — no data is shared between
-members.
+**Partly curated.** The pipeline produces ranked annotation tables
+automatically (`results/panel_rare.tsv`, deep-annotation output); the final CSV
+row and the EPCR value were assembled by the analysts from those tables. It is
+not a single end-to-end automated call.
 
----
+## Q4 — Downstream manual review
 
-## 3. Pipeline
+For each rare panel candidate we manually inspected: ClinVar classification and
+review status, AlphaMissense / CADD / LOFTEE, gnomAD frequency, allele balance
+and GQ, transcript context (MANE, exon vs last exon), and consistency with the
+HPO profile. Non-BUB1B rare hits were all UTR / low-impact and were dropped. No
+variant calls were edited; review only affected selection and ranking.
 
-All steps are scripted and numbered in `scripts/`. Tools: bcftools 1.24,
-samtools 1.24, bedtools 2.31.1; annotation via Ensembl VEP REST and a local
-ClinVar VCF (GRCh38, 2026-08-22).
+## Q5 — Public data only?
 
-### 3.1 Input characterisation (`01_inspect_vcf.sh`)
+**Only publicly available data.** No proprietary data.
 
-- **1 sample** (`WGS_EX2312012`) — proband only, **not a trio**. Compound-het
-  phasing therefore cannot use parental transmission.
-- **5,012,204 variants**. Caller: **GATK HaplotypeCaller 4.2.4.0** with
-  `VariantFiltration` hard filters (QD2/MQ40/RPRS-8/FS60/MQRankSum-12.5), run on
-  DNAnexus. Reference: GRCh38 no-alt analysis set + hs38d1, contigs **without**
-  the `chr` prefix.
-- **Not pre-annotated** — INFO carries only native GATK fields (no gnomAD, no
-  ClinVar). Annotation was performed from scratch.
-- FORMAT includes GATK physical-phasing tags (`PGT`/`PID`), used opportunistically
-  for phasing.
+## Q6 — Public data used
 
-### 3.2 Gene panel
+- Ensembl VEP REST + Ensembl gene models / MANE Select transcripts (GRCh38).
+- gnomAD v4 allele frequencies (via VEP).
+- ClinVar GRCh38 VCF, release 2026-08-22 (NCBI).
+- AlphaMissense, CADD, LOFTEE, dbscSNV, Mastermind identifiers (via VEP).
+- HPO / Phen2Gene API for phenotype-based gene ranking.
+- NCBI GRCh38 no-alt analysis set (reference FASTA).
+- Gene panel curated from the published MVA literature (BUB1B/CEP57/TRIP13 etc.).
 
-Curated MVA panel of 14 genes (9 established MVA genes + 5 related
-mitotic/SAC genes) in `config/mva_genes.tsv`. Two BED files are generated from
-Ensembl (`make_panel_bed.py`, `make_panel_cds_bed.py`):
+## Q7 — Proprietary data used
 
-- **gene body ± 10 kb** — for this phase and for phase-2 intronic/SV work;
-- **canonical CDS + 8 bp splice padding** (259 regions) — to separate coding
-  signal from intronic noise.
+None.
 
-### 3.3 Panel triage (`02_panel_triage.sh`)
+## Q8 — Compound-het pairs or single variants?
 
-1. **Contig-name reconciliation** — the panel BED is UCSC-style (`chr15`), the
-   VCF is numeric (`15`); the script detects the VCF style and rewrites the BED
-   accordingly (without this, region extraction silently returns nothing).
-2. Subset to the panel, then `bcftools norm -m -any -f <ref>` (split
-   multiallelics, left-align indels).
-3. **Quality filter:** `FILTER=PASS && FMT/DP>=10 && FMT/GQ>=20`.
+The approach outputs **compound-heterozygous pairs** (and single variants when
+applicable). The primary prediction for this case is a pair.
 
-Result: 1,814 raw panel sites → **1,778 after quality filtering**.
+## Q9 — Secondary / incidental findings
 
-Reference: `03_get_reference.sh` downloads the NCBI GRCh38 no-alt analysis set
-and strips the `chr` prefix so contig names match the VCF exactly.
+None submitted in this probe submission. A systematic secondary-findings screen
+(e.g. ACMG SF gene list) has not yet been run; it is planned for a later
+submission and would be flagged `finding_type=secondary` (which does not affect
+the automated score).
 
-### 3.4 Population frequency + consequence (`04_annotate_panel.py`)
+## Q10 — Run time and cost
 
-Ensembl VEP REST (batches of 200), pulling `most_severe_consequence` and gnomAD
-allele frequencies; each variant flagged for CDS/splice overlap.
-Rare threshold: **gnomAD AF < 0.001 or absent → 341 / 1,778 rare variants**.
-
-### 3.5 Deep annotation of candidates (`05_deep_annotate.sh` + `05_vep_candidates.py`)
-
-- `bcftools annotate` against local ClinVar (CLNSIG/CLNREVSTAT/CLNDN/CLNHGVS) for
-  the whole panel.
-- VEP REST with HGVS, MANE, exon/intron numbering, AlphaMissense, CADD, LOFTEE,
-  Mastermind, dbscSNV on the rare CDS/splice candidates.
-
-### 3.6 Phenotype prioritisation
-
-HPO terms extracted from the clinical document: HP:0002859 Rhabdomyosarcoma,
-HP:0000121 Nephrocalcinosis, HP:0004322 Short stature, HP:0001508 Failure to
-thrive, HP:0003202 Skeletal muscle atrophy, HP:0001622 Premature birth,
-HP:0001518 Small for gestational age, HP:0200067 Recurrent spontaneous abortion
-(parental).
-
-Phen2Gene (API) on this HPO set ranks **BUB1B #1 among the panel** and in the
-top ~0.2 % genome-wide; the rest of the core SAC (BUB3, BUB1, CEP57) and ESCO2
-follow. Note: the parental recurrent-pregnancy-loss term biases the global
-ranking toward thrombophilia genes (F2, F5, ANXA5) — consistent with the
-clinical document's guidance to read that term as a signal of chromosomal
-instability rather than a coagulation phenotype. A full Exomiser/LIRICAL run
-(variant + phenotype + ACMG scoring) is pending environment setup (Java + hg38
-data bundle).
+Laptop, no cloud. bcftools panel triage: seconds. VEP REST annotation of 1,778
+variants: ~1 min. ClinVar download: ~1 min (~180 MB). One-time GRCh38 reference
+download: ~10 min (~830 MB). Deep annotation of candidates: ~30 s. Total compute
+cost: **USD 0**. Analyst time: ~1 day for pipeline + this write-up. LLM
+assistance: Claude Pro subscription (USD 20/month), no per-run cost.
 
 ---
 
-## 4. Why BUB1B and not another panel gene
+## Q11 — Method abstract (≤500 words)
 
-- After quality + rarity filtering, **BUB1B is the only panel gene carrying rare
-  coding variants of impact** (one nonsense + one missense). No panel gene
-  carries a homozygous loss-of-function variant (no consanguinity signal).
-- Cross-referencing the proband's panel variants against ClinVar: **the only
-  pathogenic/likely-pathogenic hit anywhere in the panel is the BUB1B nonsense
-  allele**. Every other panel variant present in ClinVar is Benign/Likely benign.
-- The phenotype constellation (childhood rhabdomyosarcoma, severe IUGR, short
-  stature, nephrocalcinosis, parental recurrent pregnancy loss) is the classic
-  BUB1B/MVA1 presentation; Wilms tumour and rhabdomyosarcoma are the cancers
-  reported in MVA1.
+We treated the case as recessive disease with a known clinical diagnosis (MVA),
+so gene discovery reduces to recovering the two causal alleles within a curated
+14-gene MVA panel. Starting from the organiser-provided GATK VCF (single proband,
+no parents, GRCh38, unannotated), we reconciled contig naming, restricted to the
+panel (gene body ± 10 kb), normalised and split multiallelics, and applied a
+quality filter (PASS, DP ≥ 10, GQ ≥ 20), leaving 1,778 panel variants. We
+annotated these with population frequency and consequence via Ensembl VEP REST
+and kept the 341 rare (gnomAD < 0.1 % or absent). Deep annotation of the rare
+coding/splice subset used a local ClinVar release, AlphaMissense, CADD, LOFTEE
+and Mastermind. Phenotype prioritisation with Phen2Gene on eight HPO terms placed
+BUB1B first in the panel and in the top ~0.2 % genome-wide.
+
+BUB1B was the only panel gene carrying rare coding variants of impact, and the
+only panel gene with a pathogenic ClinVar entry in the proband. We predict
+compound-heterozygous BUB1B (NM_001211.6): allele 1, c.2210T>G p.Leu737Ter, a
+nonsense variant classified Pathogenic/Likely_pathogenic in ClinVar specifically
+for "Mosaic variegated aneuploidy syndrome 1" (LOFTEE high-confidence,
+gnomAD ~3×10⁻⁵); allele 2, c.3006T>G p.Asn1002Lys, a last-exon missense absent
+from gnomAD with AlphaMissense 0.92. This matches the canonical BUB1B/MVA1
+pattern of one truncating plus one hypomorphic allele, and the phenotype
+(childhood rhabdomyosarcoma, severe IUGR, short stature, nephrocalcinosis,
+parental recurrent pregnancy loss).
+
+**Strengths:** fully reproducible, public-data-only, fast (minutes, zero cloud
+cost); allele 1 is independently confirmed in ClinVar for the exact disease;
+convergent lines of evidence (frequency, consequence, ClinVar, AlphaMissense,
+phenotype ranking).
+
+**Limitations:** (1) phase of the two alleles is not experimentally confirmed —
+they are 10.9 kb apart and not read-phased in the short-read VCF; (2) allele 2 is
+not independently established as pathogenic (ClinVar lists the amino-acid change
+as VUS); its support rests on AlphaMissense, gnomAD absence, phenotype fit and
+being in trans with a pathogenic loss-of-function allele; (3) no formal ACMG
+classification yet (Exomiser/LIRICAL pending an environment with Java + the hg38
+data bundle); (4) if the true second allele is cryptic (deep-intronic,
+mobile-element insertion, or structural), it is not recoverable from the VCF and
+requires realignment of the FASTQ with SpliceAI/Pangolin, MELT/xTea and SV
+calling — planned as phase 2, informed by this probe submission's leaderboard
+score.
 
 ---
 
-## 5. Limitations and planned phase 2
-
-1. **Phase of the two BUB1B alleles is unconfirmed.** Next: read-backed phasing
-   from the FASTQ; long-read if needed.
-2. **Allele 2 (p.Asn1002Lys) is not independently established as pathogenic**
-   (ClinVar VUS; evidence rests on AlphaMissense + gnomAD absence + phenotype +
-   being in trans with a pathogenic LoF). If the leaderboard indicates only one
-   correct allele, the true second hit is cryptic — planned work: SpliceAI /
-   Pangolin over BUB1B introns, MELT / xTea for mobile-element insertions, and
-   structural-variant calling, all from realigned FASTQ.
-3. **No formal ACMG classification yet** (Exomiser/LIRICAL pending).
-4. Secondary/incidental findings not yet systematically screened.
-
----
-
-## 6. Reproducibility
+## Reproducibility
 
 ```bash
 ./scripts/setup_env.sh
@@ -165,26 +193,6 @@ python3 scripts/04_annotate_panel.py
 ./scripts/05_deep_annotate.sh
 ```
 
-The repository is private during the Hackathon and will be made public at close
-for judging.
-
----
-
-## 7. AI assistant disclosure
-
-The analysis pipeline and this report were developed with **Anthropic Claude
-(Claude Code CLI)** running locally on the analyst's machine, which orchestrated
-the command-line tools above.
-
-- **Provider / model:** Anthropic — Claude (Claude Code CLI).
-- **Plan / tier:** _[SANTIAGO — completar con el real: "Claude Max plan" / "Claude Pro" / "Anthropic API (commercial terms)"]_.
-- **Data-handling setting:** _[SANTIAGO — completar con el real, p. ej. "consumer
-  terms; entrenamiento con datos del usuario deshabilitado en Privacy settings" o
-  "Anthropic API, commercial terms, no training on customer content"]_.
-
-What the model received: shell-command outputs from the local pipeline (bcftools
-/ VEP / ClinVar), including per-variant genotype, depth and quality fields for the
-~15 panel variants examined in detail, plus aggregate counts and the candidate
-variant coordinates (which are the submission itself). The raw FASTQ, the full
-VCF, and the clinical phenotype document were **not** uploaded to any external
-service; all heavy processing ran locally.
+Repository is private during the Hackathon and will be made public at close for
+judging. No genome-derived file (FASTQ/BAM/VCF/genotype tables) is committed;
+`data/`, `ref/`, `results/`, `notes/private/` are git-ignored.

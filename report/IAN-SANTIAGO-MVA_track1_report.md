@@ -6,7 +6,7 @@
 **Submission:** #1 (probe)
 **Date:** 2026-08-30
 **Code:** https://github.com/santiago-rodriguezs/mva-hackathon-track1
-**Proband:** WGS_EX2312012
+**Proband:** PROBAND01 (VCF sample name: WGS_EX2312012)
 
 Structured to answer the official *Methods description* form (Track 1).
 

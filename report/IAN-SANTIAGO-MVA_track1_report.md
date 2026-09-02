@@ -14,22 +14,10 @@ Structured to answer the official *Methods description* form (Track 1).
 
 ## Q1 (required) — Generative AI disclosure
 
-- **Provider / product:** Anthropic — Claude, via the **Claude Code** CLI, running
-  locally on the analyst's machine and orchestrating command-line tools.
-- **Model:** Claude Sonnet (Claude Code default).
-- **Plan / tier:** **Claude Pro** (consumer subscription, USD 20/month).
-- **Relevant setting:** the account setting *"Help improve Claude"* (use of chats
-  and coding sessions to train Anthropic's models) was **enabled during the work
-  and was disabled by the participant immediately afterward**; from that point,
-  per Anthropic's consumer policy, session content is neither used for training
-  nor retained for that purpose.
-- **What the model received:** Claude Code is an API-backed CLI, so shell-command
-  outputs are returned to the model as context. These included per-variant
-  genotype, depth and quality fields for the ~15 MVA-panel variants examined in
-  detail, aggregate variant counts, HPO terms and short excerpts of the clinical
-  description, and the candidate variant coordinates (which are the submission
-  itself). The raw FASTQ, the complete VCF, and the full clinical document were
-  **not** sent to any external service; all heavy processing ran locally.
+Anthropic Claude (Claude Code CLI), model Claude Sonnet, **Claude Pro** plan
+(consumer, USD 20/month). Model-training on chats and coding sessions:
+**disabled**. Heavy processing (bcftools, VEP, ClinVar) ran locally; the raw
+FASTQ and the complete VCF were not sent to any external service.
 
 ---
 

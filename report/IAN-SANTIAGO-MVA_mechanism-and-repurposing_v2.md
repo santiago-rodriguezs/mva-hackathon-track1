@@ -35,10 +35,12 @@ BUB1B encodes **BUBR1**, a core subunit of the **mitotic checkpoint complex
 that are unattached or not under tension catalyse MCC assembly; the MCC binds and
 inhibits the **APC/C–CDC20** ubiquitin ligase, blocking degradation of **securin**
 and **cyclin B1** and thereby delaying anaphase onset until every chromosome is
-bi-oriented [1,2]. BUBR1 contributes to the checkpoint both as a structural MCC
-component and, via its **KARD motif (~aa 665–685)**, by recruiting **PP2A–B56** to
-kinetochores to balance Aurora B activity and stabilise correct
-kinetochore–microtubule attachments [3].
+bi-oriented [1,2]. BUBR1 is a multidomain protein (N-terminal TPR and KEN-box
+region, central GLEBS/BUB3-binding and KARD motifs, C-terminal kinase domain)
+[7b]. It contributes to the checkpoint both as a structural MCC component and, via
+its **KARD motif (~aa 665–685)**, by recruiting **PP2A–B56** to kinetochores to
+balance Aurora B activity and stabilise correct kinetochore–microtubule
+attachments [3].
 
 Reduced BUBR1 function weakens this checkpoint: cells enter anaphase before
 biorientation is complete, mis-segregate chromosomes, and accumulate the
@@ -69,10 +71,13 @@ At the codon level the reference leucine codon **TTA** becomes **TGA**, i.e. a
 
 ### 3.2 c.3006T>G, p.Asn1002Lys — candidate hypomorphic allele
 
-- Residue 1002 lies within the **C-terminal kinase/pseudokinase domain** of
-  BUBR1. In vertebrates this domain is widely regarded as a **pseudokinase**
-  (degenerate catalytic motifs; its essential role appears structural/scaffolding
-  rather than catalytic) [7], so we refer to it as the kinase(-like) domain.
+- Residue 1002 lies within the **C-terminal kinase domain** of BUBR1. Human BUBR1
+  retains an intact catalytic triad, but its **kinase activity is dispensable for
+  error-free chromosome segregation**; the domain's essential contribution is
+  **structural/conformational**, and residues that would normally contact ATP are
+  required for the **conformational stability of the domain** [7a]. A destabilising
+  substitution in this region is therefore a plausible way to lower BUBR1 levels
+  without needing to invoke loss of a catalytic function.
 - MVA1-associated **missense** alleles cluster in or near this domain, and
   functional work has shown that such substitutions frequently act as
   **hypomorphs that lower BUBR1 protein abundance by increasing turnover**,
@@ -138,11 +143,12 @@ p.Leu737Ter specifically** — this is a repurposing hypothesis.
 
 **Key limitation of this strategy.** Readthrough of a UGA codon inserts a
 **near-cognate amino acid — predominantly Trp, Arg or Cys — not the original
-Leu** [14]. The rescued product is therefore full-length BUBR1 carrying a
-**single substitution at position 737** (in the linker between the KARD motif and
-the kinase domain). Whether p.737 tolerates these substitutions functionally is
-unknown and must be tested (§8); it cannot be assumed that readthrough restores
-wild-type protein.
+Leu** (shown by mass spectrometry in yeast [14]; concordant in human cells, where
+Cys-tRNA is a major UGA readthrough donor [14b]). The rescued product is
+therefore full-length BUBR1 carrying a **single substitution at position 737**
+(in the linker between the KARD motif and the kinase domain). Whether p.737
+tolerates these substitutions functionally is unknown and must be tested (§8); it
+cannot be assumed that readthrough restores wild-type protein.
 
 ---
 
@@ -152,14 +158,15 @@ wild-type protein.
 then slowing BUBR1 degradation should raise the abundance of the partially
 functional protein from the second allele.
 
-**Mechanism and precedent.** BUBR1 stability is regulated by acetylation:
-acetylation (e.g. by PCAF) opposes its degradation, and **SIRT2-dependent
-deacetylation protects BUBR1 from ubiquitination and proteasomal turnover** [15].
-In **BubR1-hypomorphic (BubR1^H/H) mice** — a direct model of BUBR1 insufficiency
-— **raising NAD⁺ (via nicotinamide riboside) increases BubR1 abundance and
-extends lifespan through the SIRT2–BubR1 axis**, and SIRT2 overexpression
-partially rescues BubR1-insufficiency phenotypes [15]. This is the closest
-published in vivo analogue of the patient's situation.
+**Mechanism and precedent.** BUBR1 stability is set by the acetylation state of
+**Lys668**: acetylation by **CBP** promotes BUBR1 turnover, and **SIRT2-dependent
+deacetylation of K668 protects BUBR1 from ubiquitination and proteasomal
+degradation** [15]. In **BubR1-hypomorphic (BubR1^H/H) mice** — a direct model of
+BUBR1 insufficiency — the age-related fall in BUBR1 tracks a decline in NAD⁺, and
+**raising NAD⁺ with nicotinamide riboside increases BubR1 abundance and extends
+lifespan through the SIRT2–BubR1 axis**; SIRT2 overexpression likewise partially
+rescues BubR1-insufficiency phenotypes [15]. This is the closest published in
+vivo analogue of the patient's situation.
 
 **Candidate interventions (hypotheses):** NAD⁺ precursors already used in humans
 as supplements / in trials — **nicotinamide riboside (NR)** or **nicotinamide
@@ -182,9 +189,10 @@ destabilisation hypothesis for p.Asn1002Lys being borne out by §8.
    [16]. Any intervention that raises BUBR1 must aim for a **therapeutic window**,
    not maximal expression.
 4. **Readthrough product is not wild-type** (§5) — a substituted BUBR1 at p.737.
-5. **Pseudokinase uncertainty** [7] — mechanistic claims about the "kinase
-   domain" should be read as about a structural domain of debated catalytic
-   status.
+5. **Catalytic status of the kinase domain** [7a] — human BUBR1 keeps an intact
+   catalytic triad but its kinase activity is dispensable; our argument treats
+   the domain as a structural/conformational module, which is the current
+   consensus, not as a catalytically essential enzyme.
 6. **Delivery / target tissue.** MVA1 is constitutional and multi-system; there
    is no single target organ. See §9.
 7. **All drug claims are repurposing hypotheses**; none has been tested against
@@ -237,51 +245,68 @@ undiagnosed individuals.
 
 ---
 
-## 10. References (verify against primary sources before submission)
+## 10. References
+
+All 16 checked against PubMed/publisher records (2026-08-30).
 
 1. Musacchio A, Salmon ED. The spindle-assembly checkpoint in space and time.
-   *Nat Rev Mol Cell Biol* 2007;8:379–393.
+   *Nat Rev Mol Cell Biol* 2007;8(5):379–393. doi:10.1038/nrm2163.
 2. Musacchio A. The molecular biology of spindle assembly checkpoint signaling
-   dynamics. *Curr Biol* 2015;25:R1002–R1018.
+   dynamics. *Curr Biol* 2015;25(20):R1002–R1018. doi:10.1016/j.cub.2015.08.051.
+   PMID 26485365.
 3. Suijkerbuijk SJE, Vleugel M, Teixeira A, Kops GJPL. Integration of kinase and
    phosphatase activities by BUBR1 ensures formation of stable
-   kinetochore–microtubule attachments. *Dev Cell* 2012;23:745–755.
+   kinetochore–microtubule attachments. *Dev Cell* 2012;23(4):745–755.
+   doi:10.1016/j.devcel.2012.09.005.
 4. Hanks S, Coleman K, Reid S, et al. Constitutional aneuploidy and cancer
    predisposition caused by biallelic mutations in BUB1B. *Nat Genet*
-   2004;36:1159–1161.
+   2004;36(11):1159–1161. doi:10.1038/ng1449. PMID 15475955.
 5. Suijkerbuijk SJE, van Osch MHJ, Bos FL, Hanks S, Rahman N, Kops GJPL.
    Molecular causes for BUBR1 dysfunction in the human cancer predisposition
-   syndrome mosaic variegated aneuploidy. *Cancer Res* 2010;70:4891–4900.
+   syndrome mosaic variegated aneuploidy. *Cancer Res* 2010;70(12):4891–4900.
+   doi:10.1158/0008-5472.CAN-09-4319. PMID 20516114.
 6. Kurosaki T, Popp MW, Maquat LE. Quality and quantity control of gene
    expression by nonsense-mediated mRNA decay. *Nat Rev Mol Cell Biol*
-   2019;20:406–420.
-7. Suijkerbuijk SJE, et al. The vertebrate mitotic checkpoint protein BUBR1 is an
-   unusual pseudokinase. *Dev Cell* 2012 / Bolanos-Garcia VM, Blundell TL.
-   BUB1 and BUBR1: multifaceted kinases of the cell cycle. *Trends Biochem Sci*
-   2011;36:141–150.
+   2019;20(7):406–420. doi:10.1038/s41580-019-0126-2. PMID 30992545.
+7a. Suijkerbuijk SJE, van Dam TJP, Karagöz GE, et al. The vertebrate mitotic
+    checkpoint protein BUBR1 is an unusual pseudokinase. *Dev Cell*
+    2012;22(6):1321–1329. doi:10.1016/j.devcel.2012.03.009. PMID 22698286.
+7b. Bolanos-Garcia VM, Blundell TL. BUB1 and BUBR1: multifaceted kinases of the
+    cell cycle. *Trends Biochem Sci* 2011;36(3):141–150.
+    doi:10.1016/j.tibs.2010.08.004. PMID 20888775.
 8. Baker DJ, Jeganathan KB, Cameron JD, et al. BubR1 insufficiency causes early
    onset of aging-associated phenotypes and infertility in mice. *Nat Genet*
-   2004;36:744–749.
+   2004;36(7):744–749. doi:10.1038/ng1382. PMID 15208629.
 9. Manuvakhova M, Keeling K, Bedwell DM. Aminoglycoside antibiotics mediate
    context-dependent suppression of termination codons in a mammalian
-   translation system. *RNA* 2000;6:1044–1055.
+   translation system. *RNA* 2000;6(7):1044–1055. doi:10.1017/s1355838200000716.
 10. Gonzalez-Hilarion S, Beghyn T, Jia J, et al. Rescue of nonsense mutations by
     amlexanox in human cells. *Orphanet J Rare Dis* 2012;7:58.
+    doi:10.1186/1750-1172-7-58. PMID 22938201.
 11. Reilly SM, Chiang S-H, Decker SJ, et al. An inhibitor of the protein kinases
     TBK1 and IKK-ε improves obesity-related metabolic dysfunctions in mice.
-    *Nat Med* 2013;19:313–321.
+    *Nat Med* 2013;19(3):313–321. doi:10.1038/nm.3082. PMID 23396211.
 12. McDonald CM, Campbell C, Torricelli RE, et al. Ataluren in patients with
-    nonsense mutation Duchenne muscular dystrophy (ACT DMD): a phase 3 trial.
-    *Lancet* 2017;390:1489–1498. (See also EMA CHMP opinion, 2025.)
+    nonsense mutation Duchenne muscular dystrophy (ACT DMD): a multicentre,
+    randomised, double-blind, placebo-controlled, phase 3 trial. *Lancet*
+    2017;390(10101):1489–1498. doi:10.1016/S0140-6736(17)31611-2. PMID 28728956.
+    (EMA conditional marketing authorisation for nmDMD not renewed, 2025.)
 13. Leubitz A, Frydman-Marom A, Sharpe N, et al. Safety, tolerability, and
-    pharmacokinetics of single escalating doses of ELX-02. *Clin Pharmacol Drug
-    Dev* 2019;8:984–994.
+    pharmacokinetics of single ascending doses of ELX-02, a potential treatment
+    for genetic disorders caused by nonsense mutations, in healthy volunteers.
+    *Clin Pharmacol Drug Dev* 2019;8(8):984–994. doi:10.1002/cpdd.647.
+    PMID 30650260.
 14. Blanchet S, Cornu D, Argentini M, Namy O. New insights into the incorporation
     of natural suppressor tRNAs at stop codons in Saccharomyces cerevisiae.
-    *Nucleic Acids Res* 2014;42:10061–10072. (near-cognate insertion at UGA:
-    Trp/Arg/Cys)
+    *Nucleic Acids Res* 2014;42(15):10061–10072. doi:10.1093/nar/gku663.
+    PMID 25056309. (UGA readthrough inserts Trp/Cys/Arg.)
+14b. Beznosková P, et al. Cysteine tRNA acts as a stop codon readthrough-inducing
+     tRNA in the human HEK293T cell line. *RNA Biol* 2023;20(1):11–24.
+     PMID 37221013. (human corroboration of Cys insertion at UGA.)
 15. North BJ, Rosenberg MA, Jeganathan KB, et al. SIRT2 induces the checkpoint
-    kinase BubR1 to increase lifespan. *EMBO J* 2014;33:1438–1453.
+    kinase BubR1 to increase lifespan. *EMBO J* 2014;33(13):1438–1453.
+    doi:10.15252/embj.201386907. PMID 24920578. (SIRT2 deacetylates BubR1-K668;
+    CBP is the opposing acetyltransferase; NR rescue in BubR1^H/H mice.)
 16. Baker DJ, Dawlaty MM, Wijshake T, et al. Increased expression of BubR1
     protects against aneuploidy and cancer and extends healthy lifespan.
-    *Nat Cell Biol* 2013;15:96–102.
+    *Nat Cell Biol* 2013;15(1):96–102. doi:10.1038/ncb2643. PMID 23242215.

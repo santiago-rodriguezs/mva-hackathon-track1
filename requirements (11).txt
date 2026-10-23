@@ -1,0 +1,4 @@
+-r analysis/requirements.txt
+-r report/requirements.txt
+-r animation/requirements.txt
+pypdf>=5,<7

@@ -1,0 +1,79 @@
+[
+  {
+    "report_reference": "1",
+    "citation": "Suijkerbuijk SJE et al. Molecular causes for BUBR1 dysfunction in the human cancer predisposition syndrome mosaic variegated aneuploidy. Cancer Res. 2010;70:4891\u20134900.",
+    "url": "https://doi.org/10.1158/0008-5472.CAN-09-4319",
+    "role": "Primary literature or official/reference source; see report for interpretation",
+    "accessed": "2026-10-22"
+  },
+  {
+    "report_reference": "2",
+    "citation": "Gama Braga L et al. BUBR1 pseudokinase domain promotes kinetochore PP2A-B56 recruitment, spindle checkpoint silencing, and chromosome alignment. Cell Rep. 2020;33:108397.",
+    "url": "https://doi.org/10.1016/j.celrep.2020.108397",
+    "role": "Primary literature or official/reference source; see report for interpretation",
+    "accessed": "2026-10-22"
+  },
+  {
+    "report_reference": "3",
+    "citation": "Sieben CJ et al. BubR1 allelic effects drive phenotypic heterogeneity in mosaic-variegated aneuploidy progeria syndrome. J Clin Invest. 2020;130:171\u2013188.",
+    "url": "https://doi.org/10.1172/JCI126863",
+    "role": "Primary literature or official/reference source; see report for interpretation",
+    "accessed": "2026-10-22"
+  },
+  {
+    "report_reference": "4",
+    "citation": "North BJ et al. SIRT2 induces the checkpoint kinase BubR1 to increase lifespan. EMBO J. 2014;33:1438\u20131453.",
+    "url": "https://doi.org/10.15252/embj.201386907",
+    "role": "Primary literature or official/reference source; see report for interpretation",
+    "accessed": "2026-10-22"
+  },
+  {
+    "report_reference": "5",
+    "citation": "Uppala JK et al. Chemical chaperone, TUDCA unlike PBA, mitigates protein aggregation efficiently and resists ER and non-ER stress induced HepG2 cell death. Sci Rep. 2017;7:3831.",
+    "url": "https://doi.org/10.1038/s41598-017-03940-1",
+    "role": "Primary literature or official/reference source; see report for interpretation",
+    "accessed": "2026-10-22"
+  },
+  {
+    "report_reference": "6",
+    "citation": "DailyMed. Sodium phenylbutyrate tablets: official prescribing information. Existing indication and exposure/safety context.",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d08fd548-7eb8-4f6f-b664-b0fff6f30065",
+    "role": "Primary literature or official/reference source; see report for interpretation",
+    "accessed": "2026-10-22"
+  },
+  {
+    "report_reference": "7",
+    "citation": "UniProt. O60566, BUB1B_HUMAN canonical sequence.",
+    "url": "https://rest.uniprot.org/uniprotkb/O60566.fasta",
+    "role": "Primary literature or official/reference source; see report for interpretation",
+    "accessed": "2026-10-22"
+  },
+  {
+    "report_reference": "8",
+    "citation": "NCBI RefSeq. NM_001211.6 / NP_001202.5, BUB1B coding sequence and protein.",
+    "url": "https://www.ncbi.nlm.nih.gov/nuccore/NM_001211.6",
+    "role": "Primary literature or official/reference source; see report for interpretation",
+    "accessed": "2026-10-22"
+  },
+  {
+    "report_reference": "9",
+    "citation": "AlphaFold Protein Structure Database. O60566; analyzed file AF-O60566-F1-model_v6.pdb.",
+    "url": "https://alphafold.ebi.ac.uk/entry/O60566",
+    "role": "Primary literature or official/reference source; see report for interpretation",
+    "accessed": "2026-10-22"
+  },
+  {
+    "report_reference": "10",
+    "citation": "Shrake A, Rupley JA. Environment and exposure to solvent of protein atoms. Lysozyme and insulin. J Mol Biol. 1973;79:351\u2013371.",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/4760134/",
+    "role": "Primary literature or official/reference source; see report for interpretation",
+    "accessed": "2026-10-22"
+  },
+  {
+    "report_reference": "11",
+    "citation": "Gonzalez-Hilarion S et al. Rescue of nonsense mutations by amlexanox in human cells. Orphanet J Rare Dis. 2012;7:58.",
+    "url": "https://doi.org/10.1186/1750-1172-7-58",
+    "role": "Primary literature or official/reference source; see report for interpretation",
+    "accessed": "2026-10-22"
+  }
+]

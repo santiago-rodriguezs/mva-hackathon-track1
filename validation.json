@@ -1,0 +1,8 @@
+{
+  "eight_site_batch": "passed",
+  "R727C_extension": "passed",
+  "reference_mismatch_rejection": "passed",
+  "scenario_boundary_cases": "passed",
+  "original_N1002_SASA_agreement": "passed",
+  "biological_validation": "not_performed"
+}

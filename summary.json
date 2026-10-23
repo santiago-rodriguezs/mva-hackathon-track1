@@ -1,0 +1,23 @@
+{
+  "structural_rows": 1,
+  "comparators": 1,
+  "scenarios": 12,
+  "conditional_four_PBA_scenarios": 2,
+  "note": "Scenario counts are coverage of stipulated assumptions, not probabilities or response rates.",
+  "codons": {
+    "Leu737Ter": "TTA>TGA",
+    "Asn1002Lys": "AAT>AAG"
+  },
+  "truncation_removed_residues": 314,
+  "runtime_seconds": 0.051236986000049,
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "hashes": {
+    "inputs/AF-O60566-F1-model_v6.pdb": "684e43160c431c4a30f7ab2c6b66c2a73ae1c50ef7561fa637dbb3ffe4dcd49f",
+    "inputs/bubr1.fasta": "4ac6895daf90501d8398d17ded42f46d78b9db777f5084facc875c2926496d1b",
+    "inputs/bubr1_cds.fasta": "f894941fb49fc9aa44f71154610ae12283b0385dca9f5c31c3b0f71aeabf689a",
+    "outputs/bub1b_revision/supplement/inputs/extension_R727C.csv": "8e97f1798697225c931a8e9967e2599c62192be33efcb4fabde30b2b24872d01"
+  },
+  "scope": "One static WT model. No variant classifier, efficacy simulation, docking, MD or delta-delta-G."
+}

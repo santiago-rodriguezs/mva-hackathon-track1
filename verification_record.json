@@ -1,0 +1,82 @@
+{
+  "verified_at_utc": "2026-10-23T17:30:53.547265+00:00",
+  "python": "3.12.14",
+  "checks": {
+    "analysis": {
+      "status": "passed",
+      "seconds": 0.834
+    },
+    "main_variant_context.csv": {
+      "status": "passed",
+      "sha256": "a852b29e72a8407da1342be31ba0221d72f4eb44ed3b68ba0cca113ce463f39d"
+    },
+    "main_polar_contacts.csv": {
+      "status": "passed",
+      "sha256": "a9b54a966541a0256ec07df764e18dad84c2d3efb72921d6ad89bd9a3c2c36c3"
+    },
+    "main_scenarios.csv": {
+      "status": "passed",
+      "sha256": "453a266a572ccbfb7bf87dae0784a326eaf8a0d24ed5d880031c592ac523ba4b"
+    },
+    "extension": {
+      "status": "passed",
+      "seconds": 0.464
+    },
+    "extension_variant_context.csv": {
+      "status": "passed",
+      "sha256": "379dd5e2c5da7b7df63af288d9f8802dcb77079b6dbf00c30f28a5ebfd9104d7"
+    },
+    "extension_polar_contacts.csv": {
+      "status": "passed",
+      "sha256": "89fdb42eb41c0570aebe7579d9aaafe70138ac23667c2ffd5c3fbed44339ed72"
+    },
+    "extension_scenarios.csv": {
+      "status": "passed",
+      "sha256": "453a266a572ccbfb7bf87dae0784a326eaf8a0d24ed5d880031c592ac523ba4b"
+    },
+    "scenario_boundaries": {
+      "status": "passed",
+      "interpretation": "Author-defined experimental rules, not response probabilities."
+    },
+    "invalid_reference_rejection": {
+      "status": "passed"
+    },
+    "animation_reference_coordinates": {
+      "status": "passed",
+      "CA_atoms": 311,
+      "polar_atoms": 5,
+      "interpretation": "WT coordinates, not a mutant trajectory."
+    },
+    "report": {
+      "status": "passed",
+      "seconds": 0.292
+    },
+    "report_text_reproduction": {
+      "status": "passed",
+      "pages": 11,
+      "note": "Byte differences from PDF metadata timestamps are allowed."
+    },
+    "methods": {
+      "status": "passed",
+      "seconds": 0.035
+    },
+    "methods_answer_reproduction": {
+      "status": "passed"
+    },
+    "animation_smoke": {
+      "status": "passed",
+      "seconds": 0.681
+    }
+  },
+  "total_seconds": 3.262,
+  "biological_validation": "not_performed",
+  "scope": "Reproduction of numerical/context/rule results, not validation of pathogenicity or efficacy.",
+  "animation_smoke_metadata": {
+    "duration_seconds": 1.0,
+    "width": 480,
+    "height": 270,
+    "fps": 12,
+    "frames": 12
+  },
+  "legacy_numerical_reproduction": "passed; recorded residue/contact/codon/truncation measurements match"
+}

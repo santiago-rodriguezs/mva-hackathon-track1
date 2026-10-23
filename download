@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+rebuilt/
+validation/runs/
+animation/renders/
+report/rebuilt/
+legacy/rebuilt/

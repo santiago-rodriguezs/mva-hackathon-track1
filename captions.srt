@@ -1,0 +1,99 @@
+1
+00:00:00,000 --> 00:00:07,000
+Can restoring functional BUBR1 improve chromosome segregation?
+
+2
+00:00:07,000 --> 00:00:14,000
+BUBR1 helps restrain APC/C–CDC20 until chromosome attachments are ready.
+
+3
+00:00:14,000 --> 00:00:20,000
+This checkpoint protects daughter cells from receiving incorrect chromosome numbers.
+
+4
+00:00:20,000 --> 00:00:27,000
+The case contains two BUB1B variants: p.Leu737Ter and p.Asn1002Lys.
+
+5
+00:00:27,000 --> 00:00:34,000
+The stop can reduce full-length protein; N1002K changes the C-terminal domain.
+
+6
+00:00:34,000 --> 00:00:40,000
+Their phase is unresolved: both cis and trans configurations must be evaluated.
+
+7
+00:00:40,000 --> 00:00:47,000
+AAT becomes AAG, replacing asparagine with lysine at residue 1002.
+
+8
+00:00:47,000 --> 00:00:54,000
+The longer, positively charged side chain changes local interaction possibilities.
+
+9
+00:00:54,000 --> 00:01:00,000
+This chemistry motivates a structural hypothesis; it does not establish dysfunction.
+
+10
+00:01:00,000 --> 00:01:07,000
+The wild-type model places N1002 in a locally confident structural region.
+
+11
+00:01:07,000 --> 00:01:14,000
+Calculated solvent exposure and short polar contacts define its local environment.
+
+12
+00:01:14,000 --> 00:01:20,000
+We therefore test whether N1002K reduces the stable, functional protein pool.
+
+13
+00:01:20,000 --> 00:01:28,000
+Our working mechanism is partial loss of function through altered stability or regulation.
+
+14
+00:01:28,000 --> 00:01:36,000
+Reduced BUBR1 could weaken checkpoint control and PP2A-B56-dependent attachment regulation.
+
+15
+00:01:36,000 --> 00:01:45,000
+The predicted consequence is more chromosome-segregation errors: our primary functional endpoint.
+
+16
+00:01:45,000 --> 00:01:53,000
+We propose sodium phenylbutyrate, 4-PBA, as the lead repurposed candidate.
+
+17
+00:01:53,000 --> 00:02:01,000
+The premise: N1002K retains useful activity, but instability limits protein availability.
+
+18
+00:02:01,000 --> 00:02:09,000
+Improved proteostasis could restore the stable pool and recover BUBR1-dependent control.
+
+19
+00:02:09,000 --> 00:02:17,000
+The predicted benefit is better chromosome segregation, beyond increased protein abundance.
+
+20
+00:02:17,000 --> 00:02:24,000
+Rescue must occur at feasible exposure without expanding genomically unstable cells.
+
+21
+00:02:24,000 --> 00:02:30,000
+These predictions make 4-PBA our priority for functional testing.
+
+22
+00:02:30,000 --> 00:02:37,000
+NMN probes NAD+/SIRT2-dependent abundance; TUDCA offers another proteostasis hypothesis.
+
+23
+00:02:37,000 --> 00:02:45,000
+Amlexanox separately tests readthrough of the p.Leu737Ter premature-stop allele.
+
+24
+00:02:45,000 --> 00:02:53,000
+Test candidates separately in cells reproducing the confirmed genotype and allele phase.
+
+25
+00:02:53,000 --> 00:03:00,000
+Advance the candidate that reproducibly restores segregation fidelity at non-toxic exposure.

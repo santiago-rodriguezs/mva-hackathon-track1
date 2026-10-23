@@ -1,0 +1,9 @@
+variant,position,reference,alternate,experimental_context,evidence,plddt,sasa_960_A2,sasa_1920_A2,sidechain_sasa_A2,domain_sasa_A2,sasa_sampling_delta_A2,CA_neighbors_8A,CA_neighbors_10A,domain_context,interpretation
+N1002K,1002,N,K,case_unknown,Supplied case; no functional measurement,91.06,27.73,27.457,16.309,27.457,0.273,8,20,C_terminal,WT context only; no mutant energy or clinical classification
+I909T,909,I,T,instability,2010 Figures 3C and 4D; abundance-matched checkpoint rescue,87.0,6.678,7.257,3.208,7.257,0.579,8,18,C_terminal,WT context only; no mutant energy or clinical classification
+L1012P,1012,L,P,instability,2010 Figures 3C and 4D; abundance-matched checkpoint rescue,95.31,0.629,0.755,0.755,0.755,0.126,12,25,C_terminal,WT context only; no mutant energy or clinical classification
+R814H,814,R,H,low_abundance,2010 Figure 2D; low abundance in replacement assay,90.25,44.332,44.188,10.705,44.188,0.143,7,13,C_terminal,WT context only; no mutant energy or clinical classification
+L844F,844,L,F,low_abundance,2010 Figure 4D and Supplement S2; low abundance and failed rescue,85.88,1.258,1.132,1.132,1.132,0.126,11,20,C_terminal,WT context only; no mutant energy or clinical classification
+Y155C,155,Y,C,specific_function,2010 Figure 5; stable expression but checkpoint defect,96.31,1.717,1.884,1.884,,0.167,13,27,outside_C_terminal,WT context only; no mutant energy or clinical classification
+R550Q,550,R,Q,assay_tolerated,2010 Figure 5; restores tested functions; not a clinical benign label,35.31,221.564,220.729,169.82,,0.835,4,4,outside_C_terminal,WT context only; no mutant energy or clinical classification
+Q921H,921,Q,H,assay_tolerated,2010 Figure 4D; WT-like abundance and tested function,83.25,4.066,3.64,0.818,69.358,0.426,9,15,C_terminal,WT context only; no mutant energy or clinical classification

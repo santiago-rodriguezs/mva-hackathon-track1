@@ -1,0 +1,5 @@
+numpy>=1.26
+Pillow>=10.4
+imageio-ffmpeg>=0.5
+# Optional vector backend: pip install pycairo
+# Without Cairo the renderer automatically uses 4x supersampling.

@@ -1,0 +1,2 @@
+variant,position,reference,alternate,experimental_context,evidence,plddt,sasa_960_A2,sasa_1920_A2,sidechain_sasa_A2,domain_sasa_A2,sasa_sampling_delta_A2,CA_neighbors_8A,CA_neighbors_10A,domain_context,interpretation
+R727C,727,R,C,instability,"2010 Figures 2D and 3B; extension run, not model training",88.5,17.313,16.675,16.675,,0.638,12,16,outside_C_terminal,WT context only; no mutant energy or clinical classification

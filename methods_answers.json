@@ -1,0 +1,126 @@
+{
+  "Track 1 methods": [
+    {
+      "row": 7,
+      "question": "Team name",
+      "answer": "Ian Franco Ghitarroni\nSantiago Rodriguez Salinas\nAcademic team submission"
+    },
+    {
+      "row": 8,
+      "question": "Model number (fill out this form once per model/approach submitted; up to 6)",
+      "answer": "Not applicable: this delivery is a Track 2 drug-repurposing report, not a new Track 1 prediction submission."
+    },
+    {
+      "row": 9,
+      "question": "Please describe your model/approach in detail.",
+      "answer": "No genome-wide variant-prediction model was run. The supplied BUB1B p.Leu737Ter/N1002K calls were treated as inputs with unresolved phase. Reference annotation was checked and a public WT structure was analyzed in a batch containing N1002K and seven experimental comparators. A separate R727C input tested extension. The workflow characterizes structural context and conditional drug hypotheses; it does not verify genotype, establish pathogenicity or perform a Track 1 ranking. See Track 2 methods."
+    },
+    {
+      "row": 10,
+      "question": "(required) If commercially-available Generative AI was used, record the provider, the plan or tier, and the relevant setting in your methods description. A line is enough, for example, \"Anthropic API, Claude Sonnet, commercial terms, no training on customer content.\"",
+      "answer": "OpenAI ChatGPT, Plus subscription (account-context information), Work/Codex agent with web retrieval and local Python execution. Exact underlying model identifier and account data-sharing/training setting were not independently available. No separate LLM API was used. AI assistance was used for source retrieval, synthesis, coding and drafting; no independent expert review is claimed."
+    },
+    {
+      "row": 11,
+      "question": "Please state whether the submission file is the automated output of your computational approach (preferred), or if it has undergone downstream manual review and curation.",
+      "answer": "Not applicable: no Track 1 submission file or automated variant ranking was produced. The Track 2 report is an AI-assisted, source-checked synthesis with deterministic computational results."
+    },
+    {
+      "row": 12,
+      "question": "Please describe any downstream manual review in detail.",
+      "answer": "No independent human clinical curation of the genotype was performed in this work. Literature claims were checked against retrieved primary studies and official sources; annotation consistency was checked computationally against reference sequences."
+    },
+    {
+      "row": 13,
+      "question": "Please state whether your approach only used publicly available data (preferred) or if proprietary data was also used. If proprietary data were used, where possible, please also include a submission based only on publicly available data.",
+      "answer": "Public reference sequences, a public AlphaFold model, primary literature and official drug information were used. The case-specific variant calls and VAFs were supplied inputs and were not independently verified or assumed to be public-domain data."
+    },
+    {
+      "row": 14,
+      "question": "Please describe any public data used in detail (e.g., reference panels, population databases, literature).",
+      "answer": "UniProt O60566 canonical FASTA; NCBI RefSeq NM_001211.6 CDS / NP_001202.5; AlphaFold DB AF-O60566-F1 model v6. Literature and drug sources are listed in the Track 2 report. No population-database extraction or ClinVar classification was performed for this delivery."
+    },
+    {
+      "row": 15,
+      "question": "Please describe any proprietary data used in detail.",
+      "answer": "No proprietary drug/target database or raw patient sequencing data was accessed. User-supplied case summary: heterozygous p.Leu737Ter (reported VAF 0.5435) and N1002K (0.4643), unresolved phase; prior draft used as contextual input, not as primary experimental evidence."
+    },
+    {
+      "row": 16,
+      "question": "Is your approach able to output proposed pairs of compound heterozygous candidate variants, or only single candidate variants?",
+      "answer": "The analysis can discuss the supplied pair as a possible compound-heterozygous configuration, but no automated pairing pipeline or cis/trans determination was executed. Compound heterozygosity is not asserted."
+    },
+    {
+      "row": 17,
+      "question": "How did you handle secondary or incidental findings, if any? (See the finding_type column in your submission.)",
+      "answer": "Not assessed. No genome-wide search or finding_type submission table was generated; therefore this work makes no claim about the presence or absence of secondary findings."
+    },
+    {
+      "row": 18,
+      "question": "Please provide an estimate of run time and cost for your approach (if possible).",
+      "answer": "No Track 1 workflow was executed. The revised Track 2 cached-input run processed eight residue sites and 12 stipulated scenarios in 0.338 seconds on CPU. This excludes retrieval, literature review and document preparation; no population-scale throughput or total cost benchmark was performed."
+    },
+    {
+      "row": 19,
+      "question": "Provide a method abstract (up to 500 words). Please include strengths and limitations of your method as well as methodological detail.",
+      "answer": "This is a Track 2 drug-repurposing proposal, not a trained variant predictor. Two supplied heterozygous BUB1B variants were analyzed without assuming phase or clinical pathogenicity. Reference CDS/codon consistency, batch WT structural measurements and contrasting experimental comparator contexts informed a conditional partial-loss-of-function hypothesis. A phase-aware decision module exposes which assumptions justify candidate experiments. Results do not constitute a formal clinical variant classification, an efficacy prediction or a determination of incidental findings. The complete methodology, results and validation plan are documented in the Track 2 report and supplement."
+    }
+  ],
+  "Track 2 methods": [
+    {
+      "row": 7,
+      "question": "Team name",
+      "answer": "Ian Franco Ghitarroni\nSantiago Rodriguez Salinas\nAcademic team submission"
+    },
+    {
+      "row": 8,
+      "question": "Please describe your approach in detail (how you went from variant/mechanism to candidate medication(s)).",
+      "answer": "Combined targeted primary-literature review with reference/codon verification and batch WT structural analysis. N1002K was compared with I909T, L1012P, R814H, L844F, Y155C, R550Q and Q921H, retaining experimental assay context rather than clinical labels. Computed pLDDT, SASA at 960/1920 points, full-model/domain sensitivity and C-alpha neighbors at 8/10 A. Enumerated 12 unweighted phase/mechanism/transcript scenarios. Proposed 4-PBA as a conditional instability-rescue lead, NMN as the BUBR1-pathway comparator, TUDCA as an alternative and amlexanox for the stop allele. A separate R727C input demonstrated extension. No clinical efficacy score, mutant energy calculation, docking or MD was used."
+    },
+    {
+      "row": 9,
+      "question": "(required) If commercially-available Generative AI was used, record the provider, the plan or tier, and the relevant setting in your methods description. A line is enough, for example, \"Anthropic API, Claude Sonnet, commercial terms, no training on customer content.\"",
+      "answer": "OpenAI ChatGPT, Plus subscription (account-context information), Work/Codex agent with web retrieval and local Python execution. Exact underlying model identifier and account data-sharing/training setting were not independently available. No separate LLM API was used. AI assistance was used for source retrieval, synthesis, coding and drafting; no independent expert review is claimed."
+    },
+    {
+      "row": 10,
+      "question": "Was candidate identification automated (e.g., via a drug-target database query or LLM-assisted search), or primarily manual literature review and expert curation?",
+      "answer": "LLM-assisted literature retrieval and evidence synthesis; deterministic Python measurements and explicit scenario rules. Comparator labels were curated from reported experimental conditions. Candidate eligibility is conditional on stipulated mechanisms and phase, not generated by a trained response predictor, drug-target screen or efficacy ranking. The report and methods answers were reviewed against computed outputs and retrieved sources by the AI agent; independent human expert validation is not claimed."
+    },
+    {
+      "row": 11,
+      "question": "Please describe any manual literature review or expert curation in detail.",
+      "answer": "Source checking distinguished abundance defects from specific functional defects and assay-tolerated substitutions. I909T/L1012P abundance-matched checkpoint rescue was not equated with drug rescue. Q921H/R550Q were not labeled clinically benign. NMN abundance results were separated from SIRT2-transgenic survival findings. WT geometry was not used as proof of mutant instability. Comparator selection is targeted and non-systematic; no external predictive test set or clinical variant classification was constructed. Functional experiments are proposed, not completed."
+    },
+    {
+      "row": 12,
+      "question": "Please state whether you relied solely on publicly available drug/target databases and literature (preferred), or whether proprietary data sources were also used.",
+      "answer": "Drug/mechanism evidence used public primary literature and official labeling. Structural inputs were public UniProt, RefSeq and AlphaFold records. Supplied variant calls and VAFs were case-specific contextual inputs; phase and functional measurements are unavailable. No proprietary screening database, raw patient sequencing, identifiable clinical record or individual treatment response was analyzed."
+    },
+    {
+      "row": 13,
+      "question": "Please describe the public data sources used in detail (e.g., DrugBank, ChEMBL, ClinicalTrials.gov, OMIM, PubMed literature search).",
+      "answer": "UniProt O60566 FASTA; RefSeq NM_001211.6 / NP_001202.5 CDS; AlphaFold AF-O60566-F1-model_v6.pdb and metadata. Comparator evidence: Suijkerbuijk 2010, DOI 10.1158/0008-5472.CAN-09-4319, Figures 2-5/S2. Other primary sources: Gama Braga 2020 (10.1016/j.celrep.2020.108397), Sieben 2020 (10.1172/JCI126863), North 2014 (10.15252/embj.201386907), Uppala 2017 (10.1038/s41598-017-03940-1), Gonzalez-Hilarion 2012 (10.1186/1750-1172-7-58). DailyMed sodium phenylbutyrate labeling supplies medicinal-use context. URLs and input hashes are in the report/supplement. Access date 22 October 2026. No DrugBank, ChEMBL, population database or trial-registry screen was performed."
+    },
+    {
+      "row": 14,
+      "question": "Please describe any proprietary data sources used in detail.",
+      "answer": "No proprietary drug/target data were used. Case input consisted of previously supplied heterozygous BUB1B calls and VAFs (p.Leu737Ter 0.5435; N1002K 0.4643), with unresolved cis/trans phase. Raw FASTQ/BAM/VCF files, patient-derived cells and individual treatment outcomes were not analyzed in this submission."
+    },
+    {
+      "row": 15,
+      "question": "How did you characterize the variant's mechanism (e.g., loss-of-function vs. gain-of-function, pathway disrupted, downstream biological consequence)?",
+      "answer": "p.Leu737Ter is an expected premature-termination loss-of-function allele; NMD and residual activity are unmeasured. N1002K may cause partial loss of function through stability or regulation, or may be tolerated; gain of function is not established. N1002 WT pLDDT=91.06, SASA=27.46 A^2 and selected atomic contacts=2.825-2.948 A. It is more exposed than instability-comparator sites I909/L1012, so their mechanism cannot be transferred directly. Q921 exposure changed from 3.64 to 69.36 A^2 after domain isolation, exposing model-context sensitivity. Relevant pathways are MCC restraint of APC/C-CDC20 and KARD/PP2A-B56 attachment regulation; the predicted consequence is impaired segregation and aneuploidy. Cis/trans and functional alternatives remain explicit."
+    },
+    {
+      "row": 16,
+      "question": "Please provide an estimate of time or effort spent on this analysis (if possible).",
+      "answer": "The final cached-input run for eight sites plus the 12-scenario grid took 0.338 seconds on the available CPU environment (Python 3.12.14, NumPy 2.3.5, SciPy 1.17.0). Retrieval, review, reporting and total subscription cost were not instrumented. SASA used 960/1920 Fibonacci points, 1.4 A probe, C/N/O/S radii 1.70/1.55/1.52/1.80 A. A separate R727C batch, reference-mismatch rejection and decision-rule boundary checks were executed. No GPU or wet-lab work. Runtime is not a cohort-scale benchmark."
+    },
+    {
+      "row": 17,
+      "question": "Provide a method abstract (up to 500 words). Please include strengths and limitations of your approach as well as methodological detail.",
+      "answer": "We propose mechanism-conditioned drug repurposing for BUB1B p.Leu737Ter/N1002K with unknown phase. Reference translation verified both codon changes. WT AlphaFold analysis compared N1002K with seven experimentally studied substitutions. N1002 had pLDDT 91.06, SASA 27.46 A^2 and short polar contacts, but these do not establish mutant instability. Domain-isolation sensitivity exposed model-dependent occlusion at Q921. Twelve unweighted scenarios made phase, mechanism and transcript assumptions explicit. 4-PBA is the conditional lead for an expressed, unstable allele with residual function; NMN and TUDCA are comparators, and amlexanox targets the stop allele separately. Advancement requires better segregation fidelity at feasible exposure. R727C input extension and software checks passed. Strengths are reproducibility and transparent decisions; limitations are one WT model, selected comparators and no phase, mutant energetics or biological rescue data. This is not a validated classifier or efficacy model. AI supported retrieval, coding and drafting."
+    }
+  ]
+}

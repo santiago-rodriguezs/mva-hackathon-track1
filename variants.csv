@@ -1,0 +1,9 @@
+variant,position,reference,alternate,experimental_context,evidence
+N1002K,1002,N,K,case_unknown,Supplied case; no functional measurement
+I909T,909,I,T,instability,2010 Figures 3C and 4D; abundance-matched checkpoint rescue
+L1012P,1012,L,P,instability,2010 Figures 3C and 4D; abundance-matched checkpoint rescue
+R814H,814,R,H,low_abundance,2010 Figure 2D; low abundance in replacement assay
+L844F,844,L,F,low_abundance,2010 Figure 4D and Supplement S2; low abundance and failed rescue
+Y155C,155,Y,C,specific_function,2010 Figure 5; stable expression but checkpoint defect
+R550Q,550,R,Q,assay_tolerated,2010 Figure 5; restores tested functions; not a clinical benign label
+Q921H,921,Q,H,assay_tolerated,2010 Figure 4D; WT-like abundance and tested function

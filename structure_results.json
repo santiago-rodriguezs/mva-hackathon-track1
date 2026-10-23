@@ -1,0 +1,156 @@
+{
+  "analysis": "Wild-type AlphaFold structural-context analysis; no mutation modeling or dynamics",
+  "date": "2026-10-22",
+  "protein_length": 1050,
+  "sequence_window_992_1016": "LWNKFFVRILNANDEATVSVLGELA",
+  "source_url": "https://alphafold.ebi.ac.uk/files/AF-O60566-F1-model_v6.pdb",
+  "model_version": 6,
+  "model_created": "2025-08-01T00:00:00Z",
+  "residues": {
+    "1002": {
+      "aa": "N",
+      "CA_pLDDT": 91.06,
+      "full_960": {
+        "total_sasa_A2": 27.73,
+        "sidechain_sasa_A2": 16.092,
+        "isolated_residue_sasa_A2": 262.019,
+        "within_conformation_exposure_fraction": 0.10583
+      },
+      "full_1920": {
+        "total_sasa_A2": 27.457,
+        "sidechain_sasa_A2": 16.309,
+        "isolated_residue_sasa_A2": 261.96,
+        "within_conformation_exposure_fraction": 0.10481
+      },
+      "domain_1920": {
+        "total_sasa_A2": 27.457,
+        "sidechain_sasa_A2": 16.309,
+        "isolated_residue_sasa_A2": 261.96,
+        "within_conformation_exposure_fraction": 0.10481
+      }
+    },
+    "1008": {
+      "aa": "T",
+      "CA_pLDDT": 92.06,
+      "full_960": {
+        "total_sasa_A2": 8.76,
+        "sidechain_sasa_A2": 5.57,
+        "isolated_residue_sasa_A2": 246.911,
+        "within_conformation_exposure_fraction": 0.03548
+      },
+      "full_1920": {
+        "total_sasa_A2": 9.286,
+        "sidechain_sasa_A2": 5.982,
+        "isolated_residue_sasa_A2": 247.265,
+        "within_conformation_exposure_fraction": 0.03755
+      },
+      "domain_1920": {
+        "total_sasa_A2": 9.286,
+        "sidechain_sasa_A2": 5.982,
+        "isolated_residue_sasa_A2": 247.265,
+        "within_conformation_exposure_fraction": 0.03755
+      }
+    },
+    "1012": {
+      "aa": "L",
+      "CA_pLDDT": 95.31,
+      "full_960": {
+        "total_sasa_A2": 0.629,
+        "sidechain_sasa_A2": 0.503,
+        "isolated_residue_sasa_A2": 283.703,
+        "within_conformation_exposure_fraction": 0.00222
+      },
+      "full_1920": {
+        "total_sasa_A2": 0.755,
+        "sidechain_sasa_A2": 0.755,
+        "isolated_residue_sasa_A2": 284.08,
+        "within_conformation_exposure_fraction": 0.00266
+      },
+      "domain_1920": {
+        "total_sasa_A2": 0.755,
+        "sidechain_sasa_A2": 0.755,
+        "isolated_residue_sasa_A2": 284.08,
+        "within_conformation_exposure_fraction": 0.00266
+      }
+    }
+  },
+  "N1002_CA_distances_A": {
+    "1005": 9.194,
+    "1006": 9.412,
+    "1008": 10.723,
+    "1012": 12.32
+  },
+  "N1002_polar_contacts_under_4A": [
+    {
+      "N1002_atom": "OD1",
+      "partner_residue": "TRP978",
+      "partner_atom": "N",
+      "distance_A": 2.825
+    },
+    {
+      "N1002_atom": "ND2",
+      "partner_residue": "VAL998",
+      "partner_atom": "O",
+      "distance_A": 2.827
+    },
+    {
+      "N1002_atom": "ND2",
+      "partner_residue": "TRP978",
+      "partner_atom": "O",
+      "distance_A": 2.948
+    },
+    {
+      "N1002_atom": "ND2",
+      "partner_residue": "TRP978",
+      "partner_atom": "N",
+      "distance_A": 3.623
+    },
+    {
+      "N1002_atom": "OD1",
+      "partner_residue": "LEU1001",
+      "partner_atom": "O",
+      "distance_A": 3.728
+    }
+  ],
+  "removed_by_Leu737Ter": 314,
+  "assumptions": {
+    "probe_A": 1.4,
+    "radii_A": {
+      "C": 1.7,
+      "N": 1.55,
+      "O": 1.52,
+      "S": 1.8
+    },
+    "sample_points": [
+      960,
+      1920
+    ],
+    "domain_comparison": [
+      740,
+      1050
+    ],
+    "exposure_fraction": "SASA divided by isolated residue SASA in identical conformation; not standardized RSA"
+  },
+  "input_sha256": {
+    "AF-O60566-F1-model_v6.pdb": "684e43160c431c4a30f7ab2c6b66c2a73ae1c50ef7561fa637dbb3ffe4dcd49f",
+    "bubr1.fasta": "4ac6895daf90501d8398d17ded42f46d78b9db777f5084facc875c2926496d1b",
+    "af_metadata.json": "05cbbf846a624eb26fcced6d6755078eb07ecd38f6d4becc8aec9780553deb7c",
+    "bubr1_cds.fasta": "f894941fb49fc9aa44f71154610ae12283b0385dca9f5c31c3b0f71aeabf689a"
+  },
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "runtime_seconds": 0.093,
+  "codon_validation": {
+    "Leu737Ter": {
+      "reference": "TTA",
+      "alternate": "TGA"
+    },
+    "Asn1002Lys": {
+      "reference": "AAT",
+      "alternate": "AAG"
+    }
+  },
+  "transcript": "NM_001211.6 / NP_001202.5",
+  "CDS_translation_matches_UniProt": true,
+  "scipy": "1.17.0"
+}

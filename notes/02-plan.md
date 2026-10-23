@@ -70,3 +70,19 @@ puesto; el trabajo restante es de comunicación y profundidad, no de pipeline.
   **No se comparten datos, ni entre nosotros** (sin Drive, sin scp, sin bucket).
 - Se colabora por código. Antes de cada commit: `git status` +
   `git check-ignore`.
+
+## Envíos registrados
+
+| Track | Fecha | Quién | Resultado |
+|---|---|---|---|
+| 1 | 2026-08-30 | santiago-rodriguezs (#1) | 100/100 rank points, F-max 1.000, full match at rank 1 |
+| 2 | 2026-10-23 | santiago-rodriguezs (#1 del equipo) | Recibido. Reporte `track2/IAN-SANTIAGO-MVA_track2_report.pdf`, video https://youtu.be/d7Gki3xZp8s, repo público. Juzgamiento ~2–3 meses. |
+
+Track 2 acepta un solo envío por equipo: Ian no debe enviar.
+
+## Después del cierre (24/10/2026 23:59 UTC)
+
+- Borrado de datos dentro de 30 días (antes del 23/11/2026): `data/`, `ref/`, `results/`,
+  `notes/private/`, `~/.cache/huggingface/`, y cualquier copia en otras máquinas o VMs.
+  Cada integrante confirma por mail a Sage (ver dirección en las Official Rules del Space).
+- El repo queda público para el jurado.

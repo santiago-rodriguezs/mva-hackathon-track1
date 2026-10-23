@@ -1,67 +1,100 @@
-# BUB1B — reproducible Track 2 support
+# MVA Hackathon 2026 — Track 1
 
-**Team:** IAN-SANTIAGO-MVA  
-**Participants:** Ian Franco Ghitarroni and Santiago Rodriguez Salinas  
-**Analysis/report date:** 22 October 2026  
-**Repository packaging and verification:** 23 October 2026
+Pipeline de priorizacion de variantes para el caso de Mosaic Variegated
+Aneuploidy del hackathon de Sage Bionetworks / Hugging Face / MVA Society.
 
-This directory contains the completed computational work and sources behind the mechanism-conditioned BUB1B drug-repurposing proposal discussed in the 22 October session. Start with [the evidence map](EVIDENCE_MAP.md): it connects each reported result to its inputs, code and output.
+- Space: https://huggingface.co/spaces/SageBio/rare-disease-real-kid-mva-hackathon-2026
+- Cierre de envios: **24 de octubre de 2026** (deadline real nuestro: **18 de octubre**)
+- Envios disponibles: **6**
 
-## Read the report
+> **Antes de tocar nada, leer [DATA_HANDLING.md](DATA_HANDLING.md).**
+> Este repo va a ser publico; los datos no. Nunca se commitea un archivo
+> derivado del genoma del proband.
 
-- [Session analysis report, 11 pages](report/BUB1B_Therapeutic_Hypothesis.pdf), in English and plural team voice.
-- [Markdown text of that report](report/report.md).
-- [Session methods workbook](report/methods_description_form.xlsx) and [extracted answers](report/methods_answers.json).
-- The **official submitted report and methods form** remain at [`../../IAN-SANTIAGO-MVA_track2_report.pdf`](../../IAN-SANTIAGO-MVA_track2_report.pdf) and [`../../IAN-SANTIAGO-MVA_methods_description.xlsx`](../../IAN-SANTIAGO-MVA_methods_description.xlsx). The official PDF includes the team's additional disclosure page. Those existing files are not replaced by this supplement.
+## Equipo y envios
 
-## Reproduce the analysis
+**Nombre de equipo — poner IDENTICO en cada submission, los dos integrantes:**
 
-Use Python 3.12. From this directory:
-
-```bash
-python -m venv .venv
-# Linux/macOS: source .venv/bin/activate
-# Windows PowerShell: .venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-python analysis/analyze.py --out rebuilt/analysis
-python analysis/analyze.py --variants analysis/inputs/extension_R727C.csv --out rebuilt/extension
-python analysis/plot_results.py
-python validation/verify.py
+```
+IAN-SANTIAGO-MVA
 ```
 
-The analysis needs no network once dependencies are installed: all public reference inputs are frozen here. `--out rebuilt/...` preserves the original archived outputs and runtime. The plotting script reads archived measurements and refreshes only `analysis/results/comparison.png`.
+- No hay "crear equipo" en el Space: cada uno sube con su cuenta de Hugging Face
+  y las entradas se agrupan por ese string exacto (mismo casing, mismos guiones).
+- Track 1: **6 envios por participante** (pool efectivo de 12). No subir el mismo
+  CSV dos veces. Cuenta el mejor score del equipo.
+- Track 2 (si se hace): una sola persona sube por el equipo, 3 en total; el resto
+  se ignora.
+- Repo privado durante el hackathon, **publico al cerrar** (lo revisa el jurado).
+- Integrantes GitHub: `santiago-rodriguezs`, `ianghitarroni`. Cada uno con su
+  propio acceso al dataset en HF — no se comparten datos (ver DATA_HANDLING.md).
+- El formulario Track 1 pide 3 cosas: URL de este repo + CSV de predicciones +
+  reporte de metodos (PDF/MD). Si se uso un asistente de IA hay que declararlo
+  (proveedor, plan, setting de datos).
 
-Expected headline results are N1002 pLDDT **91.06**, SASA **27.457 Å²**, selected contacts **2.825/2.827/2.948 Å**, and **12 unweighted scenarios**. The standalone R727C run must work without editing the analysis code. Numerical CSV outputs should match the archived files exactly. Runtime and environment metadata may differ.
+## La estrategia en un parrafo
 
-## Rebuild the session PDF
+La enfermedad ya tiene diagnostico confirmado, asi que identificar el gen no es
+el desafio: la respuesta esta casi seguro dentro del panel de
+`config/mva_genes.tsv`. Es recesiva, o sea que la respuesta son **dos** variantes
+en el mismo gen. La primera es facil y la va a encontrar todo el mundo filtrando
+el VCF. La segunda es donde se define la competencia: en los casos publicados de
+BUB1B, el segundo alelo suele estar escondido donde el VCF estandar no mira
+(intron profundo, insercion de elemento movil, variante estructural), y por eso
+el hackathon entrega los FASTQ crudos y no solo el VCF.
+
+## Fases
+
+| Fase | Que | Cuando | Rinde |
+|---|---|---|---|
+| 1 | Filtrado del VCF sobre el panel + priorizacion por fenotipo (Exomiser/LIRICAL) | FdS 1 | el primer alelo, ~50 pts |
+| 2 | Vuelta a los reads: SV, elementos moviles (MELT/xTea), splicing intronico (SpliceAI/Pangolin) | FdS 2-5 | el segundo alelo |
+| 3 | Calibracion de `epcr` para F-max + hallazgos secundarios | FdS 6 | |
+| 4 | Repo reproducible (Snakemake/Nextflow) + writeup de metodos | FdS 7-8 | |
+
+El **envio #1 es una sonda**: el leaderboard devuelve el score en vivo, y ese
+numero te dice cuantos de los dos alelos tenes. Vale mas que un fin de semana de
+analisis a ciegas.
+
+## Uso
 
 ```bash
-python report/build_report.py --output-dir rebuilt/report
-python report/extract_methods.py --output rebuilt/methods_answers.json
+./scripts/setup_env.sh                       # dependencias (una vez)
+./scripts/00_download_vcf.sh                  # solo el VCF, no los 85 GB
+python3 scripts/make_panel_bed.py            # cuerpo del gen +-10kb (panel)
+python3 scripts/make_panel_cds_bed.py        # exones + splice (panel)
+./scripts/01_inspect_vcf.sh   data/WGS_EX2312012_HGWCNDSX7.vcf.gz
+./scripts/03_get_reference.sh                 # GRCh38 no-alt (contigs sin 'chr')
+./scripts/02_panel_triage.sh  data/WGS_EX2312012_HGWCNDSX7.vcf.gz
+python3 scripts/04_annotate_panel.py         # gnomAD + consecuencia (VEP REST)
+./scripts/05_deep_annotate.sh                # ClinVar + AlphaMissense (candidatas)
 ```
 
-Bundled DejaVu fonts make report generation independent of OS font paths. The builder uses the recorded comparison results and runtime so its text remains aligned with the archived report. PDF timestamps can differ. It does not generate the separately added official team-disclosure page.
+Notas de metodo y estado: `notes/01-metodo-dia1.md`, `notes/02-plan.md`.
+El detalle con genotipos/coordenadas vive en `notes/private/` (GITIGNORED).
 
-## Render the animation
+## Formato de entrega (Track 1)
 
-```bash
-python animation/animate.py --quality preview --start 45 --end 46 --width 480 --fps 12 --output rebuilt/animation_test.mp4
-python animation/animate.py --quality final --output rebuilt/BUB1B_explainer.mp4
+CSV, hasta 10 filas, coordenadas GRCh38:
+
+```
+proband_id, chrom_1, pos_1, ref_1, alt_1, chrom_2, pos_2, ref_2, alt_2, epcr, finding_type, notes
 ```
 
-The full source retains 180 seconds, English captions, Latin Modern fonts and the supplied C-alpha JSON. Cairo is optional; without it geometry uses at least 4× supersampling. No synthesized narration is included. Large MP4s are reproducible outputs and are not included in Git. See [animation instructions](animation/README.md).
+- `chrom_2..alt_2` para el par en heterocigosis compuesta (vacio si no aplica)
+- `epcr` en (0,1]: probabilidad estimada de causalidad. **Puntua F-max**, asi que
+  no se rellenan las 10 filas salvo que cada una se la gane
+- `finding_type`: `primary` o `secondary`. Los secundarios **no bajan** el score
+  automatico, asi que conviene sumar dos o tres bien razonados
+- Nombre del archivo: `santiago-rodriguezs_<metodo>.csv`
 
-## What is demonstrated
+## Estructura
 
-- Exact reference translation/codon consistency and seven literature-grounded comparison contexts.
-- WT structural metrics with sampling and domain-isolation sensitivity.
-- An explicit, phase-aware experimental decision grid.
-- A separate additional-variant run, invalid-reference rejection, source hashes and result reproduction.
-
-The analysis **does not establish N1002K instability or drug efficacy**. 4-PBA is a conditional lead for an expressed, stability-impaired allele with useful residual function. NMN/TUDCA are comparators; amlexanox targets a separate stop-allele branch. Unknown phase is retained. Animation morphs are not molecular dynamics. The prospective functional assays in the report have not been performed.
-
-## Provenance and data scope
-
-The support package contains public protein/CDS/model references, curated candidate/comparator annotations, and the candidate details already discussed in the report. It contains no raw proband sequencing, raw genotype call tables, patient identifiers, clinical records, credentials or chat transcripts. Candidate calls are supplied inputs, not independently re-called or phased here. Read the repository's [data-handling policy](../../../DATA_HANDLING.md).
-
-[references.json](references.json) documents scientific sources. [MANIFEST.sha256](MANIFEST.sha256) fingerprints the files as uploaded. [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) documents included fonts and reference data. No broad repository license is introduced by this upload.
+```
+config/    panel de genes y BED derivado
+scripts/   pipeline, numerados por orden de ejecucion
+notes/     preguntas abiertas y bitacora
+data/      datos del hackathon (GITIGNORED, se borra al final)
+ref/       genoma de referencia (GITIGNORED)
+results/   salidas intermedias (GITIGNORED)
+```

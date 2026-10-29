@@ -25,7 +25,10 @@ vivo. El acceso se concede individualmente y bajo terminos que aceptaste el
 - [ ] Borrar discos, snapshots y storage de cualquier VM usada
 - [ ] Borrar el cache de Hugging Face (`~/.cache/huggingface/`)
 - [ ] Vaciar la papelera
-- [ ] Cada integrante manda mail a MVAHackathon2026@synapse.org confirmando
+- [ ] Borrar logs propios con bloques de variantes (transcripts del asistente de IA,
+      memoria local tipo claude-mem)
+- [ ] Cada integrante manda mail a **cnb@sagebase.org** confirmando (direccion indicada
+      por los organizadores el 28/10/2026; plazo 23/11/2026)
 
 ## Que SI se puede publicar
 

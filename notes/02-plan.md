@@ -82,7 +82,9 @@ Track 2 acepta un solo envío por equipo: Ian no debe enviar.
 
 ## Después del cierre (24/10/2026 23:59 UTC)
 
-- Borrado de datos dentro de 30 días (antes del 23/11/2026): `data/`, `ref/`, `results/`,
-  `notes/private/`, `~/.cache/huggingface/`, y cualquier copia en otras máquinas o VMs.
-  Cada integrante confirma por mail a Sage (ver dirección en las Official Rules del Space).
-- El repo queda público para el jurado.
+- [x] Borrado de datos (29/10/2026, Santiago): `data/`, `results/`, `notes/private/`, `ref/`,
+  puntero de caché HF, logs del asistente de IA y filas del proyecto en claude-mem.
+  El historial del repo nunca contuvo datos del dataset: no hizo falta reescribirlo.
+- [x] Ian borró su copia y envió su confirmación a cnb@sagebase.org.
+- El repo queda público para el jurado. Ganadores: 18/12/2026; los premios se liberan con
+  las confirmaciones de borrado + documentación fiscal y screening.
